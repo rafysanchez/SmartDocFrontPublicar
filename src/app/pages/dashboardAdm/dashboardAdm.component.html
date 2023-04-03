@@ -1,0 +1,14 @@
+<section class="main-container" [ngClass]="{collapsed: collapedSideBar}">
+  <div [@routerTransition]>
+    <app-notificacao></app-notificacao>
+    <ng-template [ngIf]=" this.reportId =='149d7e71-5902-4d6d-9476-4906263bc79e'" [ngIfElse]="Relatorios">
+      <app-page-header [heading]="'Dashboard Adm'" [icon]="'fa-tachometer-alt'"></app-page-header>
+    </ng-template>
+    <ng-template #Relatorios>
+        <app-page-header [heading]="'Relatorios'" [icon]="'fa-tachometer-alt'"></app-page-header>
+      </ng-template>
+    <div style=" width: 100%;" [ngStyle]="{ 'height': (screenHeight-350)+ 'px' }" #reportContainer id="reportContainer"
+      name="reportContainer"> </div>
+    <app-spinner></app-spinner>
+  </div>
+</section>

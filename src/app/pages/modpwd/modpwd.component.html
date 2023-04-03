@@ -1,0 +1,129 @@
+<div class="login-page" [@routerTransition]>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-vertical">
+    <div class="row justify-content-md-center">
+      <app-notificacao></app-notificacao>
+      <div class="col-md-4">
+        <img src="../../../assets/logo.png" width="150px" />
+        <div class="form-row">
+          <div class="form-group col">
+            <div class="form-group">
+              <div class="form-content">
+                <div class="form-group">
+                  <input type="email" formControlName="Login" class="form-control input-underline input-lg"
+                    [ngClass]="{ 'is-invalid': submitted && f.Login.errors }" aria-label="Usuário" id="Login"
+                    name="Login" aria-describedby="basic-addon1" required maxlength="120"
+                    placeholder="{{ 'Usuario' | translate }}" />
+                  <div *ngIf="submitted && f.Login.errors" class="invalid-feedback">
+                    <div *ngIf="f.Login.errors.required" translate>MsgErroLogin</div>
+                    <div *ngIf="f.Login.errors.email" translate>MgsErroEmail</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="password" class="form-control input-underline input-lg" formControlName="Password"
+                    [ngClass]="{ 'is-invalid': submitted && f.Password.errors }"
+                    placeholder="{{ 'Senha' | translate }}">
+                  <div *ngIf="submitted && f.Password.errors" class="invalid-feedback">
+                    <div *ngIf="f.Password.errors.required" translate>MsgErroSenha</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control input-underline input-lg"  placeholder="{{ 'ConfirmPwd' | translate }}"
+                    formControlName="ConfirmPassword"
+                    [ngClass]="{ 'is-invalid': submitted && f.ConfirmPassword.errors }">
+                  <div *ngIf="submitted && f.ConfirmPassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.ConfirmPassword.errors.required" translate>MsgErroConfirmSenha</div>
+                    <div *ngIf="f.ConfirmPassword.errors.mustMatch" translate>MsgErroPwdIgual</div>
+                  </div>
+                </div>
+              </div>
+              <input type="submit" class="btn btn-success" value="{{'AltSenha' | translate}}" />
+              &nbsp;
+              <input type="button" class="btn btn-danger"  (click)="Voltar()"value="{{'Voltar' | translate}}" />
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <app-spinner></app-spinner>
+  <router-outlet></router-outlet>
+
+<!-- 
+  <div id="loginbox" [@routerTransition]>
+    <app-notificacao></app-notificacao>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-vertical">
+      <div class="form-row">
+        <div class="form-group col">
+          <div class="form-group">
+            <div class="control-group normal_text">
+              <h3><img src="../../../assets/logo.png" alt="Logo" /></h3>
+            </div>
+            <div class="control-group">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                  </span>
+                </div>
+                <input type="email" formControlName="Login" class="form-control input-underline input-lg"
+                  [ngClass]="{ 'is-invalid': submitted && f.Login.errors }" placeholder="Usuário" aria-label="Usuário"
+                  id="Login" name="Login" aria-describedby="basic-addon1" required maxlength="120" />
+                <div *ngIf="submitted && f.Login.errors" class="invalid-feedback">
+                  <div *ngIf="f.Login.errors.required">Login do usuário deve ser preenchido</div>
+                  <div *ngIf="f.Login.errors.email">O endereço de e-mail deve ser válido</div>
+                </div>
+
+              </div>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">
+                    <fa-icon [icon]="faLock"></fa-icon>
+                  </span>
+                </div>
+                <input type="password" class="form-control input-underline input-lg" placeholder="Senha"
+                  formControlName="Password" [ngClass]="{ 'is-invalid': submitted && f.Password.errors }">
+                <div *ngIf="submitted && f.Password.errors" class="invalid-feedback">
+                  <div *ngIf="f.Password.errors.required">Senha deve ser preenchida</div>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">
+                    <fa-icon [icon]="faLock"></fa-icon>
+                  </span>
+                </div>
+                <input type="password" class="form-control input-underline input-lg" placeholder="Confirme a Senha"
+                  formControlName="ConfirmPassword" [ngClass]="{ 'is-invalid': submitted && f.ConfirmPassword.errors }">
+                <div *ngIf="submitted && f.ConfirmPassword.errors" class="invalid-feedback">
+                  <div *ngIf="f.ConfirmPassword.errors.required">A Confirmação de senha deve ser preenchida</div>
+                  <div *ngIf="f.ConfirmPassword.errors.mustMatch">As senhas devem ser idênticas</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions">
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm">
+                    <input type="submit" class="btn btn-success" value="{{'AltSenha' | translate}}" />
+                  </div>
+                  <div class="col-sm"></div>
+                  <div class="col-sm">
+                      <input type="button" class="btn btn-danger"  (click)="Voltar()"value="{{'Voltar' | translate}}" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <app-spinner></app-spinner>
+  <router-outlet></router-outlet> -->

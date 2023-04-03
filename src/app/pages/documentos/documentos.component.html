@@ -1,0 +1,141 @@
+<app-spinner></app-spinner>
+<section class="main-container">
+  <div [@routerTransition]>
+    <app-notificacao></app-notificacao>
+    <ng-template [ngIf]="this.tipoDoc =='0'" [ngIfElse]="DocSaida">
+      <app-page-header [heading]="'DocsEntrada'" [icon]="'fa-file'" [complemento]="modeloPage"></app-page-header>
+    </ng-template>
+    <ng-template #DocSaida>
+      <app-page-header [heading]="'DocsSaida'" [icon]="'fa-file'" [complemento]="modeloPage"></app-page-header>
+    </ng-template>
+    <form [formGroup]="registerForm">
+      <div class="row">
+        <div class="col">
+          <div class="pull-left">
+            <mat-form-field>
+              <mat-label>{{'OptCxCli' | translate}}</mat-label>
+              <mat-select formControlName="Customer" (selectionChange)='onSubmit()'>
+                <mat-option> </mat-option>
+                <mat-option *ngFor="let filters of Cnpjs" [value]="filters"
+                  matTooltip="{{MontarNomeCli(filters.CNPJ,filters.Name)}}">
+                  {{MontarNomeCli(filters.CNPJ,filters.Name)}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            &nbsp;
+            <mat-form-field>
+              <mat-label>{{'OptLayouts' | translate}}</mat-label>
+              <mat-select [ngModel]="Selecionado" formControlName="Layout" (selectionChange)='MudarLayout()'>
+                <mat-option *ngFor="let filters of this.Layouts" [value]="filters.Id">
+                  {{filters.Nome}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            &nbsp;
+            <ng-template [ngIf]="this.ExisteMani && this.modelo === 'NF-e'">
+              <mat-form-field>
+                <mat-label>{{'OptManifestacoes' | translate}}</mat-label>
+                <mat-select formControlName="Manifestacoes" (selectionChange)="SendMani()">
+                  <mat-option [value]=''> </mat-option>
+                  <mat-option *ngFor="let filters of this.User.Manifestacoes" [value]="filters">
+                    {{filters.DescManifestacao}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-template>
+          </div>
+          <div class="pull-right">
+            <input type="submit" class="btn btn-outline-success btn-sm" value="{{ 'BtnPesquisar' | translate}}"
+              (click)='onSubmit()' />
+            &nbsp;
+            <input type="button" class="btn btn-outline-primary btn-sm" value="{{ 'BtnLimpar' | translate}}"
+              (click)='Limpar()' />
+            &nbsp;
+            <input type="button" class="btn btn-outline-secondary btn-sm" value="{{ 'BtnPesqAvac' | translate}}"
+              (click)='openDialog()' />
+            &nbsp;
+            <input type="button" class="btn btn-outline-info btn-sm" value="{{ 'BtnLayout' | translate}}"
+              (click)='AbrirLayout()' />
+          </div>
+        </div>
+      </div>
+      <mat-tab-group headerPosition="below">
+        <mat-tab label="{{'MnuPesChave' | translate}}">
+          <div class="d-flex bd-highlight">
+            <div class="p-2 flex-fill bd-highlight">
+              <mat-form-field class="full-width">
+                <input matInput formControlName="Chave" placeholder="{{'InputPesqChave' | translate}}" maxlength="120">
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="{{'DocsPesDatas' | translate}}">
+          <div class="d-flex bd-highlight">
+            <div class="p-2 bd-highlight">
+              <mat-form-field>
+                <input matInput formControlName="DtEmiDe" placeholder="{{'DocsDtEmiDe' | translate}}"
+                  [errorStateMatcher]="matcher" [clearIfNotMatch]="true" mask="00/00/0000">
+                <mat-error *ngIf="f.DtEmiDe.hasError('ValidDate')">
+                  {{ 'MsgDataDocInvalida' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="p-2 bd-highlight">
+              <mat-form-field>
+                <input matInput formControlName="DtEmiAte" placeholder="{{'DocsDtEmiAte' | translate}}"
+                  [errorStateMatcher]="matcher" [clearIfNotMatch]="true" mask="00/00/0000">
+                <mat-error *ngIf="f.DtEmiAte.hasError('ValidDate')">
+                  {{ 'MsgDataDocInvalida' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </mat-tab>
+        <mat-tab label="{{'DocsPesCnpj' | translate}}">
+          <div class="d-flex bd-highlight">
+            <div class="p-2 bd-highlight">
+              <mat-form-field>
+                <input matInput formControlName="CnpjEmi" placeholder="{{'DocsCnpjEmissor' | translate}}"
+                  [clearIfNotMatch]="true" mask="00.000.000/0000-00" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="f.CnpjEmi.hasError('CnpjValido')">
+                  {{'MsgCnpjInvalido' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="p-2 bd-highlight">
+              <mat-form-field>
+                <input matInput formControlName="CnpjDest" placeholder="{{'DocsCnpjDest' | translate}}"
+                  [clearIfNotMatch]="true" mask="00.000.000/0000-00" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="f.CnpjDest.hasError('CnpjValido')">
+                  {{'MsgCnpjInvalido' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+		<!-- nova guia para nota fiscal-->
+        <mat-tab label="{{'Numero de Nota Fiscal' | translate}}">
+          <div class="d-flex bd-highlight">
+
+            <div class="p-2 bd-highlight">
+              <mat-form-field>
+                <input matInput formControlName="NNF" placeholder="{{'Nota Fiscal' | translate}}"
+                >
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+        <!-- final nova guia-->
+		
+		
+      </mat-tab-group>
+      <div class="row">
+        <div class="col-sm-12">
+            <app-grid [columnDefs]='columnDefs' [iniciar]="this.readGrid" [paginationPageSize]="100" [rowData]='rowData'>
+          </app-grid>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

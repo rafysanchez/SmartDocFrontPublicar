@@ -1,0 +1,22 @@
+<app-spinner></app-spinner>
+<section class="main-container">
+  <div [@routerTransition]>
+    <app-notificacao></app-notificacao>
+    <app-page-header [heading]="'MnuCxEntrada'" [icon]="'fa-at'"></app-page-header>
+    <div class="row">
+      <div class="col">
+        <div class="pull-right">
+          <input type="button" class="btn btn-outline-success btn-sm" value="{{ 'BtnCriarEmail' | translate}}"
+            (click)="Criar()" />
+        </div>
+      </div>
+
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-12">
+          <app-grid  [iniciar]="this.readGrid" [columnDefs]="columnDefs" [paginationPageSize]="100" [rowSelection]='single' [rowData]="rowData" [height] = "500"></app-grid>
+      </div>
+    </div>
+  </div>
+</section>

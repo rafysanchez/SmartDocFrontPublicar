@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-xl-12">
+    <h2 class="page-header">
+      {{ heading | translate}}
+    </h2>
+    <ol class="breadcrumb">
+      <ng-template [ngIf]="heading !='Home'">
+        <li class="breadcrumb-item">
+          <i class="fa fa-home"></i>&nbsp;<a style="cursor: pointer;" (click)="redirectToHome()">{{'Home' | translate}}</a>
+        </li>
+      </ng-template>
+      <li class="breadcrumb-item active"><i class="fa {{icon}}"></i>&nbsp;{{ heading | translate}}{{ complemento}}
+      </li>
+    </ol>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+
+
+<ag-grid-angular
+    [ngStyle]='this.style'
+    class="ag-theme-balham"
+    [rowData]='this.rowData'
+    [columnDefs]='this.columnDefs'
+    [gridOptions]='this.gridOptions'
+    [pagination]="true"
+    [paginationPageSize]="this.paginationPageSize"
+    [cacheBlockSize]="this.cacheBlockSize"
+    [rowSelection]="this.rowSelection"
+    (gridReady)="onGridReady($event)"
+    [iniciar]="this.iniciar"
+    [enableCellTextSelection]="true"
+    #agGrid
+    id="Grid"
+    ></ag-grid-angular>
+
+

@@ -1,0 +1,131 @@
+<app-spinner></app-spinner>
+<section class="main-container">
+  <div [@routerTransition]>
+    <app-page-header [heading]="'MnuEmailError'" [icon]="'fas fa-minus-circle'"></app-page-header>
+    <app-notificacao></app-notificacao>
+    <form [formGroup]="registerForm"  >
+    <div class="row">
+      <div class="col-sm-6">
+        <label>Intervalo da Data de Envio:</label>
+
+      <form class="form-inline">
+        <div class="form-group hidden">
+          <div class="input-group">
+            <input name="datepicker"
+                   class="form-control"
+                   ngbDatepicker
+                   #datepicker="ngbDatepicker"
+                   [autoClose]="'outside'"
+                   (dateSelect)="onDateSelection($event)"
+                   [displayMonths]="2"
+                   [dayTemplate]="t"
+                   outsideDays="hidden"
+                   [startDate]="fromDate!">
+            <ng-template #t let-date let-focused="focused">
+              <span class="custom-day"
+                    [class.focused]="focused"
+                    [class.range]="isRange(date)"
+                    [class.faded]="isHovered(date) || isInside(date)"
+                    (mouseenter)="hoveredDate = date"
+                    (mouseleave)="hoveredDate = null">
+                {{ date.day }}
+              </span>
+            </ng-template>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <input #dpFromDate
+                   class="form-control" placeholder="yyyy-mm-dd"
+                   name="dpFromDate"
+                   [value]="formatter.format(fromDate)"
+                   (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar fa fa-calendar" (click)="datepicker.toggle()" type="button"></button>
+            </div>
+          </div>
+        </div>
+
+          <div class="input-group">
+            <input #dpToDate
+                   class="form-control" placeholder="yyyy-mm-dd"
+                   name="dpToDate"
+                   [value]="formatter.format(toDate)"
+                   (input)="toDate = validateInput(toDate, dpToDate.value)">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary  calendar fa fa-calendar" (click)="datepicker.toggle()" type="button"></button>
+            </div>
+
+        </div>
+      </form>
+    </div>
+      <div class="col-sm-3">
+        <label>Email:</label>
+        <input class="form-control" type="text" formControlName="Email">
+      </div>
+      <div class="col-sm-1" style="padding-top: 33px;">
+        <input type="button" class="btn btn-outline-dark btn-sm" value="{{ 'Filtrar' | translate}}" (click)=" ChamarDados()" style="height: 38px; width: 100px;"/>
+      </div>
+  </div>
+  <br><br>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="well" style="overflow: scroll">
+
+
+<!--           <div class="form-group form-inline">
+              Full text search: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="service.searchTerm"/>
+              <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
+          </div> -->
+
+          <table class="table table-striped" style="font-size: 0.8em">
+            <thead>
+            <tr>
+              <th (click)="sort('documentEmailEmail.SENDE')">Enviado por  <span *ngIf="key =='documentEmailEmail.SENDE'">{{reverse ? '▲' : '▼'}}</span></th>
+              <th scope="col" (click)="sort('documentEmailEmail.SUBJE')">Assunto  <span *ngIf="key =='documentEmailEmail.SUBJE'">{{reverse ? '▲' : '▼'}}</span></th>
+              <th scope="col" (click)="sort('documentEmailEmail.DTENV')">Data do E-mail  <span *ngIf="key =='documentEmailEmail.DTENV'">{{reverse ? '▲' : '▼'}}</span></th>
+              <th scope="col" (click)="sort('documentEmailEmail.HRENV')">Hora do E-mail  <span *ngIf="key =='documentEmailEmail.HRENV'">{{reverse ? '▲' : '▼'}}</span></th>
+              <th scope="col" (click)="sort('documentEmailEmail.SENDE')">Erros  <span *ngIf="key =='documentEmailEmail.SENDE'">{{reverse ? '▲' : '▼'}}</span></th>
+              <th scope="col" (click)="sort('DTINT')">Data de Integração  <span *ngIf="key =='DTINT'">{{reverse ? '▲' : '▼'}}</span></th>
+              <th scope="col" (click)="sort('HRINT')">Hora de Integração  <span *ngIf="key =='HRINT'">{{reverse ? '▲' : '▼'}}</span></th>
+              <th scope="col" (click)="sort('DTPRC')">Data de Procesamento <span *ngIf="key =='DTPRC'">{{reverse ? '▲' : '▼'}}</span></th>
+              <th scope="col" (click)="sort('HRPRC')">Hora de Procesamento <span *ngIf="key =='HRPRC'">{{reverse ? '▲' : '▼'}}</span></th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of rowData | orderBy: key : reverse let i = index">
+              <td><ngb-highlight [result]="data.documentEmailEmail.SENDE" ></ngb-highlight></td>
+              <td><ngb-highlight [result]="data.documentEmailEmail.SUBJE" ></ngb-highlight></td>
+              <td><ngb-highlight [result]="data.documentEmailEmail.DTENV"></ngb-highlight></td>
+              <td><ngb-highlight [result]="data.documentEmailEmail.HRENV"></ngb-highlight></td>
+              <td><ngb-highlight [result]="data.documentEmailEmail.SENDE" ></ngb-highlight></td>
+              <td><ngb-highlight [result]="data.DTINT" ></ngb-highlight></td>
+              <td><ngb-highlight [result]="data.HRINT" ></ngb-highlight></td>
+              <td><ngb-highlight [result]="data.DTPRC" ></ngb-highlight></td>
+              <td><ngb-highlight [result]="data.HRPRC" ></ngb-highlight></td>
+            </tr>
+            </tbody>
+            <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo"></pagination-controls>
+          </table>
+
+          <!-- <div class="d-flex justify-content-between p-2">
+            <ngb-pagination
+              [collectionSize]="(total$ | async)!" [(page)]="emailerrorservice.page" [pageSize]="emailerrorservice.pageSize">
+            </ngb-pagination>
+
+            <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="emailerrorservice.pageSize">
+              <option [ngValue]="2">2 items per page</option>
+              <option [ngValue]="4">4 items per page</option>
+              <option [ngValue]="6">6 items per page</option>
+            </select>
+          </div> -->
+
+      </div>
+    </div>
+    </div>
+  </form>
+  </div>
+
+</section>
+...

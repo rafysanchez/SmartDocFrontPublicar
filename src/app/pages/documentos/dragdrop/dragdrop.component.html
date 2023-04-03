@@ -1,0 +1,61 @@
+<app-notificacao></app-notificacao>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>{{'MnuLayoutTitulo' | translate}} - {{this.data.NmLayout}}</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<p></p>
+<mat-divider></mat-divider>
+<p></p>
+<form [formGroup]="registerForm">
+  <div cdkDropListGroup>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="example-container">
+          <h2>{{'MnuLayoutDisp' | translate}} </h2>
+
+          <div cdkDropList [cdkDropListData]="todo" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item.DsColumn}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="example-container">
+          <h2>{{'MnuLayoutTodos' | translate}}</h2>
+
+          <div cdkDropList [cdkDropListData]="done" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of done" cdkDrag>{{item.DsColumn}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p></p>
+  <mat-divider></mat-divider>
+  <p></p>
+  <div class="row">
+    <div class="col">
+
+      <div class="pull-left">
+        <mat-form-field class="full-width">
+          <input matInput formControlName="Nome" (change)="SitBtn()" placeholder="{{'InputDragNome' | translate}}"
+            maxlength="120">
+        </mat-form-field>
+      </div>
+      <div class="pull-right">
+        <input type="submit" class="btn btn-outline-warning btn-sm" value="{{ 'BtnSalvarComo' | translate}}"
+          (click)='Salvar()' [disabled]="this.Disable" />
+        &nbsp;
+        <input type="submit" class="btn btn-outline-secondary btn-sm" value="{{ 'BtnExcluir' | translate}}"
+        (click)='Excluir()' />
+      &nbsp;
+        <input type="submit" class="btn btn-outline-success btn-sm" value="{{ 'BtnSalvar' | translate}}"
+          (click)='Salvar()' />
+        &nbsp;
+        <input type="button" class="btn btn-outline-dark btn-sm" value="{{ 'BtnCancelar' | translate}}"
+          (click)="onNoClick()" />
+      </div>
+    </div>
+  </div>
+</form>

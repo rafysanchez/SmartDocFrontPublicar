@@ -1,0 +1,24 @@
+<app-spinner></app-spinner>
+
+<section class="main-container">
+  <div [@routerTransition]>
+      <app-page-header [heading]="'MnuUsuario'" [icon]="'fa-users'"></app-page-header>
+      <app-notificacao></app-notificacao>
+      <div class="row">
+          <div class="col">
+            <div class="pull-right">
+              <input type="button" class="btn btn-outline-success btn-sm" value="{{ 'BtnCriarUser' | translate}}"
+                (click)="Criar()" />
+            </div>
+          </div>
+
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-sm-12">
+             <app-grid  [iniciar]="this.readGrid" [columnDefs]="columnDefs" [paginationPageSize]="100" [rowSelection]='single' [rowData]="rowData" [height] = "500"></app-grid>
+          </div>
+        </div>
+  </div>
+
+</section>

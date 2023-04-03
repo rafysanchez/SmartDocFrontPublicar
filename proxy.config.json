@@ -1,0 +1,9 @@
+{
+  "/back/api": {
+      "target": "http://localhost:62663/api",
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "pathRewrite": { "^/back/api" : "" }
+  }
+}
+

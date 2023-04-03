@@ -1,0 +1,103 @@
+<app-spinner></app-spinner>
+<section class="main-container" [ngClass]="{collapsed: collapedSideBar}">
+  <div [@routerTransition]>
+    <app-notificacao></app-notificacao>
+    <app-page-header [heading]="'MnuUsuario'" [icon]="'fa-users'"></app-page-header>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col">
+          <div class="pull-right">
+            <input type="submit" class="btn btn-outline-success btn-sm" value="{{ 'BtnSalvar' | translate}}" />
+            &nbsp;
+            <input type="button" class="btn btn-outline-dark btn-sm" value="{{ 'Voltar' | translate}}"
+              (click)="Voltar()" />
+          </div>
+        </div>
+      </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="Email" #Email placeholder="Email" [errorStateMatcher]="matcher"
+                maxlength="120" required>
+              <mat-error *ngIf="f.Email.hasError('required')">
+                {{ 'MsgEmailObri' | translate }}
+              </mat-error>
+              <mat-error *ngIf="f.Email.hasError('email')">
+                {{'MgsErroEmail' | translate}}
+              </mat-error>
+
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="Name" #Name placeholder="{{'InputUserNome' | translate}}"
+                [errorStateMatcher]="matcher" maxlength="70" required>
+              <mat-error *ngIf="f.Name.hasError('required')">
+                {{ 'MsgGrupoNome' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="Description" #Description placeholder="{{'InputUserDesc' | translate}}"
+                maxlength="80">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <mat-form-field class="full-width">
+              <mat-label>{{'OptGrpupos' | translate}}</mat-label>
+              <mat-select formControlName="Groups" multiple required [errorStateMatcher]="matcher">
+                <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">{{'OptGrpTodos' | translate}}
+                </mat-option>
+                <mat-option *ngFor="let filters of Grupos" [value]="filters"
+                  (click)="tosslePerOne(allSelected.viewValue)">
+                  {{filters.Name}}
+                </mat-option>
+
+              </mat-select>
+              <mat-error *ngIf="f.Groups.hasError('required')">
+                {{ 'OptGrpupos' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="full-width">
+              <mat-label>{{'OptGrpAcesso' | translate}}</mat-label>
+              <mat-select formControlName="Funcoes" multiple required [errorStateMatcher]="matcher">
+                <mat-option #allAcesso (click)="SelTodosAcessos()" [value]="0">{{'OptGrpTodos' | translate}}
+                </mat-option>
+                <mat-option *ngFor="let filters of Acessos" [value]="filters" (click)="SelAcesso(allAcesso.viewValue)">
+                  {{filters.DsMenuPrinc}} - {{ filters.Descricao}}
+                </mat-option>
+
+              </mat-select>
+              <mat-error *ngIf="f.Funcoes.hasError('required')">
+                {{ 'OptGrpAcesso' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="full-width">
+              <mat-label>{{'OptGrpMani' | translate}}</mat-label>
+              <mat-select formControlName="Manifestacoes" multiple>
+                <mat-option #allManifestacoes (click)="SelTodosMani()" [value]="0">{{'OptGrpTodos' | translate}}
+                </mat-option>
+                <mat-option *ngFor="let filters of Manifestacoes" [value]="filters"
+                  (click)="SelMani(allSelected.viewValue)">
+                  {{filters.Modelo}} - {{filters.DescManifestacao}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <mat-checkbox formControlName="Active" [checked]="true" translate>{{ 'InputGrpAtivo' | translate }}
+            </mat-checkbox>
+          </div>
+        </div>
+    </form>
+  </div>
+</section>

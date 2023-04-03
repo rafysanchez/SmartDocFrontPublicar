@@ -1,0 +1,57 @@
+<div class="login-page" [@routerTransition]>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-vertical">
+    <div class="row justify-content-md-center">
+      <app-notificacao></app-notificacao>
+      <div class="col-md-4">
+        <img src="../../../assets/logo.png" width="150px" />
+        <div class="form-row">
+          <div class="form-group col">
+            <div class="form-group">
+              <div class="form-content">
+                <div class="form-group">
+                  <input type="email" formControlName="Login" class="form-control input-underline input-lg"
+                    [ngClass]="{ 'is-invalid': submitted && f.Login.errors }" aria-label="Usuário" id="Login"
+                    name="Login" aria-describedby="basic-addon1" required maxlength="120"
+                    placeholder="{{ 'Usuario' | translate }}" />
+                  <div *ngIf="submitted && f.Login.errors" class="invalid-feedback">
+                    <div *ngIf="f.Login.errors.required" translate>MsgErroLogin</div>
+                    <div *ngIf="f.Login.errors.email" translate>MgsErroEmail</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="password" class="form-control input-underline input-lg" formControlName="Password"
+                    [ngClass]="{ 'is-invalid': submitted && f.Password.errors }"
+                    placeholder="{{ 'Senha' | translate }}">
+                  <div *ngIf="submitted && f.Password.errors" class="invalid-feedback">
+                    <div *ngIf="f.Password.errors.required" translate>MsgErroSenha</div>
+                  </div>
+                </div>
+              </div>
+              <input type="submit" class="btn btn-success" value="{{ 'Logar' | translate }}" />
+              &nbsp;
+              <input type="button" class="btn btn-info" (click)="ResetPwd()" value="{{ 'RecSenha' | translate }}" />
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+  <div class="float-right">
+      <div class="row">
+        <div class="col-sm">
+          <img src="../../../assets/us.png" (click)="TrocarLinguagem('en')" style="cursor: pointer;" title="{{'SelLinguagem' | translate }}">
+        </div>
+        <div class="col-sm">
+            <img src="../../../assets/br.png" (click)="TrocarLinguagem('pt br')" style="cursor: pointer;" title="{{'SelLinguagem' | translate }}">
+        </div>
+        
+      </div>
+    </div>
+</div>
+
+<app-spinner></app-spinner>
+<router-outlet></router-outlet>

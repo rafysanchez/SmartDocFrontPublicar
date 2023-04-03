@@ -1,0 +1,34 @@
+  <section class="main-container">
+    <div [@routerTransition]>
+        <app-page-header [heading]="'Home'" [icon]="'fa-home'"></app-page-header>
+      <div class="row">
+        <div class="col-md-12">
+          <ngb-carousel>
+            <ng-template ngbSlide *ngFor="let slider of sliders">
+              <img class="img-fluid mx-auto d-block" [src]="slider.imagePath" alt="Random first slide" width="100%">
+              <div class="carousel-caption">
+                <h3>{{slider.label}}</h3>
+                <p>{{slider.text}}</p>
+              </div>
+            </ng-template>
+          </ngb-carousel>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-xl-3 col-lg-6" style="margin-bottom: 10px;">
+        <app-stat [bgClass]="'primary'" [icon]="'fa-file'" [count]="totalNFe" [label]= "'TotalDoc' | translate" [documento]="'NF-e'" [imodel]="'NF-e'"> </app-stat>
+      </div>
+      <div class="col-xl-3 col-lg-6"  style="margin-bottom: 10px;">
+        <app-stat [bgClass]="'warning'" [icon]="'fa-file'" [count]="totalNFS" [label]="'TotalDoc' | translate"  [documento]="'NFS-e'" [imodel]="'NFS-e'"></app-stat>
+      </div>
+      <div class="col-xl-3 col-lg-6" style="margin-bottom: 10px;">
+        <app-stat [bgClass]="'success'" [icon]="'fa-file'" [count]="totalCTe" [label]="'TotalDoc' | translate" [documento]="'CT-e'" [imodel]="'CT-e'"></app-stat>
+      </div>
+      <div class="col-xl-3 col-lg-6" style="margin-bottom: 10px;">
+        <app-stat [bgClass]="'danger'" [icon]="'fa-exclamation-circle'" [count]="totalNaoProcessado"  [label]="'TotalEmailNProcessado' | translate" [imodel]="'EmailsNProcessados'" ></app-stat>
+      </div>
+    </div>
+
+  </section>

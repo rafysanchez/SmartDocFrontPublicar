@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h4 class="modal-title"><img src="../../../../assets/logo.png" alt=""> {{ title | translate}}</h4>
+  <a (click)="dismiss()"><i class="fa fa-fw fa-times"></i></a>
+</div>
+<div class="modal-body">
+  {{ message | translate}}
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-info" (click)="accept()">{{ btnOkText }}</button>
+  <input type="button" class="btn btn-dark" (click)="decline()" value="{{'BtnCancelar' | translate}}" />
+  
+</div>

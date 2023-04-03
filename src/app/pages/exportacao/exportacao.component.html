@@ -1,0 +1,140 @@
+<app-spinner></app-spinner>
+<section class="main-container">
+  <div [@routerTransition]>
+    <app-notificacao></app-notificacao>
+    <app-page-header [heading]="'MnuExportacao'" [icon]="'fa-fw fa-download'"></app-page-header>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col">
+          <div class="pull-right">
+            <input type="submit" class="btn btn-outline-success btn-sm" value="{{ 'BtnSalvar' | translate}}" />
+            &nbsp;
+            <input type="button" class="btn btn-outline-dark btn-sm" value="{{ 'Voltar' | translate}}"
+              (click)="Voltar()" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <mat-form-field class="full-width">
+            <mat-label>{{'OptDoc' | translate}}</mat-label>
+            <mat-select formControlName="documentType" required [errorStateMatcher]="matcher">
+              <mat-option value='NF-e'>NF-e</mat-option>
+              <mat-option value='NFS-e'>NFS-e</mat-option>
+              <mat-option value='CT-e'>CT-e</mat-option>
+            </mat-select>
+            <mat-error *ngIf="f.documentType.hasError('required')">
+              {{ 'OptDoc' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field class="full-width">
+            <mat-label>{{'OptTpDoc' | translate}}</mat-label>
+            <mat-select formControlName="TPNF" required [errorStateMatcher]="matcher">
+              <mat-option value='0'>{{'DocsEntrada' | translate}}</mat-option>
+              <mat-option value='1'>{{'DocsSaida' | translate}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="f.TPNF.hasError('required')">
+              {{ 'OptTpDoc' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-5">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="NmExport" #Name placeholder="{{'InputNmExport' | translate}}"
+              [errorStateMatcher]="matcher" maxlength="30" required>
+            <mat-error *ngIf="f.NmExport.hasError('required')">
+              {{ 'MsgGrupoNome' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <ng-template [ngIf]="f.documentType.value==='CT-e'" [ngIfElse]="NNFDe">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="NNFstart" placeholder="{{'InputConhDe' | translate}}"
+                mask="9999999999">
+            </mat-form-field>
+          </ng-template>
+          <ng-template #NNFDe>
+            <mat-form-field class="full-width">
+              <input matInput formControlName="NNFstart" placeholder="{{'DocFiltroNFDe' | translate}}"
+                mask="9999999999">
+            </mat-form-field>
+          </ng-template>
+        </div>
+        <div class="col-sm-2">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="DTEMIstart" placeholder="{{'DocFiltroDtEmiDe' | translate}}"
+              [clearIfNotMatch]="true" mask="00/00/0000" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="f.DTEMIstart.hasError('ValidDate')">
+              {{'MsgFiltroDtEmiDeInv' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-2">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="CNPJEstart" placeholder="{{'DocFiltroCnpjEmiDe' | translate}}"
+              [clearIfNotMatch]="true" mask="00.000.000/0000-00" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="f.CNPJEstart.hasError('CnpjValido')">
+              {{'MsgFiltroCnpjEmiDeInv' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="CNPJDstart" [errorStateMatcher]="matcher"
+              placeholder="{{'DocFiltroCnpjDestDe' | translate}}" [clearIfNotMatch]="true" mask="00.000.000/0000-00">
+            <mat-error *ngIf="f.CNPJDstart.hasError('CnpjValido')">
+              {{'MsgFiltroCnpjDestDeInv' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <ng-template [ngIf]="f.documentType.value==='CT-e'" [ngIfElse]="NNFAte">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="NNFend" placeholder="{{'InputConhAte' | translate}}" mask="9999999999">
+            </mat-form-field>
+          </ng-template>
+          <ng-template #NNFAte>
+            <mat-form-field class="full-width">
+              <input matInput formControlName="NNFend" placeholder="{{'DocFiltroNFAte' | translate}}" mask="9999999999">
+            </mat-form-field>
+          </ng-template>
+
+        </div>
+        <div class="col-sm-2">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="DTEMIend" placeholder="{{'DocFiltroDtEmiAte' | translate}}"
+              [clearIfNotMatch]="true" mask="00/00/0000" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="f.DTEMIend.hasError('ValidDate')">
+              {{'MsgFiltroDtEmiAteInv' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-2">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="CNPJEend" placeholder="{{'DocFiltroCnpjEmiAte' | translate}}"
+              [clearIfNotMatch]="true" mask="00.000.000/0000-00" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="f.CNPJEend.hasError('CnpjValido')">
+              {{'MsgFiltroCnpjEmiAteInv' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="CNPJDend" placeholder="{{'DocFiltroCnpjDestAte' | translate}}"
+              [clearIfNotMatch]="true" mask="00.000.000/0000-00" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="f.CNPJDend.hasError('CnpjValido')">
+              {{'MsgFiltroCnpjDestAteInv' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

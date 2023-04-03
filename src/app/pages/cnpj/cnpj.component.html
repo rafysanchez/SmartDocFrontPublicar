@@ -1,0 +1,86 @@
+<app-spinner></app-spinner>
+<section class="main-container" [ngClass]="{collapsed: collapedSideBar}">
+  <div [@routerTransition]>
+    <app-notificacao></app-notificacao>
+    <app-page-header [heading]="'CNPJ´s'" [icon]="'fa-building'"></app-page-header>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col">
+          <div class="pull-right">
+            <input type="submit" class="btn btn-outline-success btn-sm" value="{{ 'BtnSalvar' | translate}}" />
+            &nbsp;
+            <input type="button" class="btn btn-outline-dark btn-sm" value="{{ 'Voltar' | translate}}"
+              (click)="Voltar()" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="Cnpj" #Cnpj placeholder="CNPJ" [clearIfNotMatch]="true"
+              mask="00.000.000/0000-00" [errorStateMatcher]="matcher" required>
+            <mat-error *ngIf="f.Cnpj.hasError('required')">
+              {{ 'MsgCnpjObri' | translate }}
+            </mat-error>
+            <mat-error *ngIf="f.Cnpj.hasError('CnpjValido')">
+              {{'MsgCnpjInvalido' | translate}}
+            </mat-error>
+
+          </mat-form-field>
+        </div>
+        <div class="col-sm-5">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="Name" [errorStateMatcher]="matcher" #Name
+              placeholder="{{'InputCnpjNome' | translate}}" maxlength="50" required>
+            <mat-error *ngIf="f.Name.hasError('required')">
+              {{ 'MsgNomeObri' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-5">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="Description" #Description placeholder="{{'InputCnpjDesc' | translate}}"
+              maxlength="60">
+          </mat-form-field>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <mat-form-field class="full-width">
+            <mat-label>{{'OptGrpupos' | translate}}</mat-label>
+            <mat-select formControlName="Groups" multiple required [errorStateMatcher]="matcher">
+              <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">{{'OptGrpTodos' | translate}}
+              </mat-option>
+              <mat-option *ngFor="let filters of Grupos" [value]="filters"
+                (click)="tosslePerOne(allSelected.viewValue)">
+                {{filters.Name}}
+              </mat-option>
+
+            </mat-select>
+            <mat-error *ngIf="f.Groups.hasError('required')">
+              {{ 'OptGrpupos' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="{{'InputCnpjVenc' | translate}}" formControlName="DtVencCert"
+              [errorStateMatcher]="matcher" [clearIfNotMatch]="true" mask="00/00/0000">
+            <mat-error *ngIf="f.DtVencCert.hasError('ValidDate')">
+              {{ 'MsgDataInvalida' | translate }}
+            </mat-error>
+<!--              <mat-error *ngIf="f.DtVencCert.hasError('LowerDate')">
+              {{ 'MsgDataMenorHoje' | translate }}
+            </mat-error> -->
+          </mat-form-field>
+        </div>
+        <div class="col-sm">
+          <mat-checkbox formControlName="Active" [checked]="true" translate>{{ 'InputGrpAtivo' | translate }}
+          </mat-checkbox>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</section>

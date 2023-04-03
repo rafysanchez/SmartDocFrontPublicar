@@ -1,0 +1,37 @@
+<div class="login-page" [@routerTransition]>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-vertical">
+    <div class="row justify-content-md-center">
+      <app-notificacao></app-notificacao>
+      <div class="col-md-4">
+        <div class="control-group normal_text">
+          <h3><img src="../../../assets/logo.png" alt="Logo" /></h3>
+        </div>
+        <div class="normal_text" translate>MsgTrocaPwd</div>
+        <div class="control-group">
+          <div class="form-row">
+            <div class="form-group col">
+              <div class="form-group">
+                <input type="email" class="form-control input-underline input-lg"   placeholder="{{ 'Usuario' | translate }}"
+                  aria-label="Usuário" formControlName="email" aria-describedby="basic-addon1" required maxlength="120"
+                  [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                  <div *ngIf="f.email.errors.required" translate>MsgErroLogin</div>
+                  <div *ngIf="f.email.errors.email" translate>MgsErroEmail</div>
+                </div>
+
+
+              </div>
+              <input type="submit" class="btn btn-success" value="{{ 'Recuperar' | translate}}" />
+              &nbsp;
+              <input type="button" class="btn btn-info" (click)="Voltar()" value="{{ 'Voltar' | translate}}" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
+<app-spinner></app-spinner>
+<router-outlet></router-outlet>

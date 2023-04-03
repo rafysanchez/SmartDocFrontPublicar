@@ -1,0 +1,60 @@
+<app-spinner></app-spinner>
+<section class="main-container" [ngClass]="{collapsed: collapedSideBar}">
+  <div [@routerTransition]>
+    <app-notificacao></app-notificacao>
+    <app-page-header [heading]="'PgConfigUsuario'" [icon]="'fa-gear'"></app-page-header>
+   
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-vertical">
+      <div class="form-row">
+        <div class="form-group col">
+          <div class="form-content">
+            <div class="container-fluid">
+              <div class="col-12">
+                <mat-accordion>
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        {{'MsgFiltroDias' | translate}}
+                      </mat-panel-title>
+                      <mat-panel-description>
+                        {{'MsgFiltroExplicativo' | translate}}
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm">
+                          <mat-slider thumbLabel="true" tickInterval="1" min="1" max="120" formControlName="QtdDias"
+                            id="QtdDias" name="QtdDias" (input)="SetValor($event)"></mat-slider>
+                        </div>
+                        <div class="col-sm">
+                          <mat-form-field>
+                            <input matInput placeholder="{{ 'InputQtdDias' | translate }}" formControlName="InpDias"
+                              readonly>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-sm">
+                            <mat-slide-toggle formControlName="SendEmail">Deseja receber Notificações ?</mat-slide-toggle>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </div>
+              <br>
+
+            </div>
+            <div class="modal-footer">
+              <div class="row float-right">
+                <div class="col-sm-4">
+                  <input type="submit" class="btn btn-info" value="Salvar">
+                </div>
+     
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</section>

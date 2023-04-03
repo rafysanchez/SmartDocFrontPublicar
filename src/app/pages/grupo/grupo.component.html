@@ -1,0 +1,40 @@
+<app-spinner></app-spinner>
+<section class="main-container" [ngClass]="{collapsed: collapedSideBar}">
+  <div [@routerTransition]>
+    <app-notificacao></app-notificacao>
+    <app-page-header [heading]="'PgGrupo'" [icon]="'fa-calendar'"></app-page-header>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-vertical">
+      <div class="row">
+        <div class="col">
+          <div class="pull-right">
+            <input type="submit" class="btn btn-outline-success btn-sm"  value="{{ 'BtnSalvar' | translate}}" />
+            &nbsp;
+            <input type="button" class="btn btn-outline-dark btn-sm" value="{{ 'Voltar' | translate}}"
+              (click)="Voltar()" />
+          </div>
+        </div>
+      </div>
+          <div class="row">
+            <div class="col-sm">
+              <mat-form-field>
+                <input matInput formControlName="Name" #Name
+                  placeholder="{{ 'InputGrpNome' | translate }}" required  maxlength="20">
+                <mat-error *ngIf="registerForm['controls'].Name.hasError('required') && submitted">
+                    {{ 'MsgGrupoNome' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md">
+              <mat-form-field>
+                <input matInput placeholder="{{ 'InputGrpDesc' | translate }}" formControlName="Description"  maxlength="60">
+              </mat-form-field>
+            </div>
+            <div class="col-sm" style="padding-top: 25px;">
+              <mat-checkbox formControlName="Active" [checked]="true" translate>{{ 'InputGrpAtivo' | translate }}
+              </mat-checkbox>
+            </div>
+          </div>
+
+    </form>
+  </div>
+</section>

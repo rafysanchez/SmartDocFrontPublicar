@@ -1,0 +1,70 @@
+<app-spinner></app-spinner>
+<section class="main-container">
+  <div [@routerTransition]>
+    <app-page-header [heading]="'MnuIntMail'" [icon]="'fas fa-minus-circle'"></app-page-header>
+    <app-notificacao></app-notificacao>
+
+    <form [formGroup]="registerForm">
+
+    <div class="row">
+      <div class="col">
+        <div class="pull-right">
+          <input type="submit" class="btn btn-outline-success btn-sm" value="{{ 'BtnPesquisar' | translate}}"
+            (click)='onSubmit()' />
+          &nbsp;
+          <input type="button" class="btn btn-outline-primary btn-sm" value="{{ 'BtnLimpar' | translate}}"
+            (click)='Limpar()' />
+        </div>
+      </div>
+    </div>
+
+    <mat-form-field style="width: 100%;">
+      <mat-tab-group headerPosition="below">
+          <mat-tab label="{{'MnuPesEmail' | translate}}">
+            <div class="d-flex bd-highlight">
+              <div class="p-2 bd-highlight">
+                <mat-form-field class="full-width">
+                  <label>Email do destinatário</label>
+                  <input matInput formControlName="SENDE" maxlength="200">
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="{{'MnuPesDataEmail' | translate}}">
+            <div class="d-flex bd-highlight">
+              <div class="p-2 bd-highlight">
+                <mat-form-field>
+                  <label>Início da Data de Envio</label>
+                  <input matInput formControlName="DTENVstart"
+                    [errorStateMatcher]="matcher" [clearIfNotMatch]="true" mask="00/00/0000">
+                  <mat-error *ngIf="f.DTENVstart.hasError('ValidDate')">
+                    {{ 'MsgDataDocInvalida' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="p-2 bd-highlight">
+                <mat-form-field>
+                  <label>Fim da Data de Envio</label>
+                  <input matInput formControlName="DTENVend"
+                    [errorStateMatcher]="matcher" [clearIfNotMatch]="true" mask="00/00/0000">
+                  <mat-error *ngIf="f.DTENVend.hasError('ValidDate')">
+                    {{ 'MsgDataDocInvalida' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-form-field>
+
+
+        <div class="row">
+          <div class="col-sm-12">
+            <app-grid  [iniciar]="this.readGrid" [columnDefs]="columnDefs" [paginationPageSize]="100" [rowSelection]='single' [rowData]="rowData" [height] = "500">
+            </app-grid>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </section>

@@ -1,0 +1,226 @@
+<section class="main-container">
+  <app-spinner></app-spinner>
+  <div [@routerTransition]>
+    <app-notificacao></app-notificacao>
+    <app-page-header
+      [heading]="'MnuComplementar'"
+      [icon]="'fa-link'"
+      [complemento]="modeloPage"
+    ></app-page-header>
+    <div class="row">
+      <div class="col-sm-5 pull-left">
+        <form [formGroup]="registerForm">
+          <mat-form-field class="full-width">
+            <mat-label>{{ "InputDocComAnexos" | translate }}</mat-label>
+            <mat-select
+              [ngModel]="Selecionado"
+              formControlName="Documentos"
+              (selectionChange)="ExibirDoc()"
+            >
+              <mat-option
+                *ngFor="let filters of this.DocAnexos"
+                [value]="filters"
+                matTooltip="{{ filters.NmFile }}"
+              >
+                {{ filters.NmFile }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+      </div>
+      <div class="col-sm-4">
+        <ul class="nav justify-content-center">
+          <nav class="navbar navbar-light bg-light">
+            <li class="justify-content-center">
+              <a href="javascript:void(0)" (click)="PesqNnf(-1)"
+                ><img
+                  src="../../../assets/back.png"
+                  matTooltip="{{ 'ImgAnterior' | translate }}"
+              /></a>
+            </li>
+            <li class="justify-content-center">
+              <a class="nav active" matTooltip="Documento: {{ this.Nota }}"
+                >&nbsp;{{ this.Nota }}&nbsp;</a
+              >
+            </li>
+            <li class="justify-content-center">
+              <a href="javascript:void(0)" (click)="PesqNnf(1)"
+                ><img
+                  src="../../../assets/forward.png"
+                  matTooltip="{{ 'ImgProximo' | translate }}"
+              /></a>
+            </li>
+          </nav>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <div class="pull-right">
+          <input
+          type="button"
+          class="btn btn-outline-dark btn-sm"
+          value="{{ 'DownLoad' | translate }}"
+          (click)="DownloadArquivos()"
+        /> &nbsp;
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="{{ 'Voltar' | translate }}"
+            (click)="Voltar()"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <mat-tab-group headerPosition="below">
+          <mat-tab label="{{ 'TabHeader' | translate }}">
+            <ag-grid-angular
+              [ngStyle]="style"
+              class="ag-theme-alpine"
+              [rowData]="rowData"
+              [columnDefs]="columnDefs"
+              class="ag-theme-balham"
+            >
+            </ag-grid-angular>
+          </mat-tab>
+          <mat-tab label="{{ 'TabItems' | translate }}" *ngIf="hideItensViewer">
+            <ag-grid-angular
+              [ngStyle]="style"
+              class="ag-theme-alpine"
+              [rowData]="linhasItens"
+              [columnDefs]="colunasItens"
+              class="ag-theme-balham"
+            >
+            </ag-grid-angular>
+          </mat-tab>
+          <mat-tab
+            label="{{ 'TabComplementar' | translate }}"
+            *ngIf="hideFeaturesViewer"
+          >
+            <ag-grid-angular
+              [ngStyle]="style"
+              class="ag-theme-alpine"
+              [rowData]="linhasComplemento"
+              [columnDefs]="colunasComplemento"
+              class="ag-theme-balham"
+            >
+            </ag-grid-angular>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+    <div class="row" *ngIf="hidePdfViewer">
+      <div class="col-sm-12">
+        <ngx-extended-pdf-viewer
+          [base64Src]="Documento.SrcBase64"
+          [showOpenFileButton]="false"
+          [showDownloadButton]="true"
+          [filenameForDownload]="Documento.NmFile"
+          [showPresentationModeButton]="true"
+          [showFindButton]="false"
+          [showBookmarkButton]="false"
+          [showPropertiesButton]="false"
+          [contextMenuAllowed]="false"
+          backgroundColor="#ffffff"
+          [height]="'90vh'"
+          [useBrowserLocale]="true"
+          [language]="Idioma"
+        >
+        </ngx-extended-pdf-viewer>
+      </div>
+    </div>
+    <div class="row" *ngIf="hideXmlViewer">
+      <div class="col-sm-12">
+        <pre class="prettyprint" style="border: none">{{
+          XmlString | xml
+        }}</pre>
+      </div>
+    </div>
+    <div class="row" *ngIf="hideLinkViewer">
+      <div class="col-sm-12">
+        <iframe
+          style="width: 100%; height: 480px; border: 0"
+          [attr.src]="this.Link"
+        ></iframe>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="hideImgViewer">
+      <div class="col-sm-12">
+        <img
+          style="width: 50%; height: 100%; border-style: solid"
+          [src]="this.Link"
+        />
+      </div>
+    </div>
+
+    <div *ngIf="hideEmailViewer">
+      <div class="row">
+        <div class="col-sm-4">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              #Name
+              placeholder="{{ 'InputEmailDe' | translate }}"
+              disabled
+              [value]="Documento.De"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              #Name
+              placeholder="{{ 'InputEmailEm' | translate }}"
+              disabled
+              [value]="Documento.EnviadoEm"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              #Name
+              placeholder="{{ 'InputEmailAssunto' | translate }}"
+              disabled
+              [value]="Documento.Assunto"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <pre
+            class="prettyprint"
+            style="border: none"
+            *ngIf="hideEmailXmlViewer"
+            >{{ XmlString | xml }}</pre
+          >
+          <div
+            style="width: 100%; height: 100%; border: 0"
+            [innerHTML]="this.Link"
+            *ngIf="hideEmailHtmlViewer"
+          ></div>
+          <mat-form-field
+            class="full-width"
+            *ngIf="!hideEmailHtmlViewer && !hideEmailXmlViewer"
+          >
+            <mat-label>{{ "InputEmailCorpo" | translate }}</mat-label>
+            <textarea
+              matInput
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="100"
+              disabled
+              [value]="Documento.SrcBase64"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<router-outlet></router-outlet>

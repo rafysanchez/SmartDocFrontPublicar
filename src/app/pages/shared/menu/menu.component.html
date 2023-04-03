@@ -1,0 +1,161 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
+  <div class="list-group">
+    <a routerLink="home" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-fw fa-home" matTooltip="{{'Home' | translate}}"></i>&nbsp;
+      <span>{{'Home' | translate}}</span>
+    </a>
+
+    <!--Dashboard-->
+    <ng-template template ngFor let-ifunc="index" let-cFunc="count" let-func [ngForOf]='User.Funcoes["Dashboard_Adm"]'>
+      <a [routerLink]="[func.CaminhoNovo]" [queryParams]="{ id: func.FuncClickNovo }" skipLocationChange=true
+        [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <i class="fa fa-fw {{func.IconeNovo}}" matTooltip="{{func.Descricao}}"></i>&nbsp;
+        <span>{{func.Descricao}}</span>
+      </a>
+    </ng-template>
+
+    <!--Dashboard-->
+    <ng-template template ngFor let-ifunc="index" let-cFunc="count" let-func [ngForOf]='User.Funcoes["Dashboard"]'>
+      <a [routerLink]="[func.CaminhoNovo]" [queryParams]="{ id: func.FuncClickNovo }" skipLocationChange=true
+        [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <i class="fa fa-fw {{func.IconeNovo}}" matTooltip="{{func.Descricao}}"></i>&nbsp;
+        <span>{{func.Descricao}}</span>
+      </a>
+    </ng-template>
+
+    <!--Cadastros-->
+    <div class="nested-menu" *ngIf="User.Funcoes['Cadastros']">
+      <a class="list-group-item" (click)="addExpandClass('pages')">
+        <i class="fa fa-fw fa-edit" matTooltip="{{'Cadastros' | translate}}"></i>&nbsp;
+        <span>{{'Cadastros' | translate}}</span>
+      </a>
+      <li class="nested" [class.expand]="showMenu === 'pages'">
+        <ul class="submenu">
+          <ng-template template ngFor let-ifunc="index" let-cFunc="count" let-func [ngForOf]="User.Funcoes['Cadastros']">
+            <li>
+              <a [routerLink]="[func.CaminhoNovo]" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                <i class="fa fa-fw {{func.IconeNovo}}" matTooltip="{{func.Descricao}}"></i>
+                <span>&nbsp;{{func.Descricao}}</span>
+              </a>
+            </li>
+          </ng-template>
+        </ul>
+      </li>
+    </div>
+
+    <!--Pesquisa por chave-->
+    <ng-template template ngFor let-ifunc="index" let-cFunc="count" let-func
+      [ngForOf]="User.Funcoes['Pesquisa_por_Chave']">
+      <a [routerLink]="[func.CaminhoNovo]" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <i class="fa fa-fw {{func.IconeNovo}}" matTooltip="{{'Pesquisa' | translate}}"></i>&nbsp;
+        <span>{{'Pesquisa' | translate}}</span>
+      </a>
+    </ng-template>
+
+    <!--Docs Entrada-->
+    <div class="nested-menu" *ngIf="User.Funcoes['Docs_de_Entrada']">
+      <a class="list-group-item" (click)="addExpandClass('docs')">
+        <i class="fa fa-fw fa-folder" matTooltip="{{'DocsEntrada' | translate}}"></i>&nbsp;
+        <span>{{'DocsEntrada' | translate}}</span>
+      </a>
+      <li class="nested" [class.expand]="showMenu === 'docs'">
+        <ul class="submenu">
+          <ng-template template ngFor let-ifunc="index" let-cFunc="count" let-func
+            [ngForOf]="User.Funcoes['Docs_de_Entrada']">
+            <li>
+              <a [routerLink]="[func.CaminhoNovo]" [queryParams]="{ modelo: func.FuncClickNovo,Tipo:0 }"
+                [routerLinkActive]="['router-link-active']" class="list-group-item" skipLocationChange=true
+                routerLinkActiveOptions="{ __change_detection_hack__: [ modelo, mode ] }">
+                <i class="fa fa-fw  {{func.IconeNovo}}" matTooltip="{{func.Descricao}}"></i>
+                <span>&nbsp;{{func.Descricao}}</span>
+              </a>
+            </li>
+          </ng-template>
+        </ul>
+      </li>
+    </div>
+
+    <!--Docs Saida-->
+    <div class="nested-menu" *ngIf="User.Funcoes['Docs_de_Saida']">
+      <a class="list-group-item" (click)="addExpandClass('docsSaida')">
+        <i class="fa fa-fw fa-folder-open" matTooltip="{{'DocsSaida' | translate}}"></i>&nbsp;
+        <span>{{'DocsSaida' | translate}}</span>
+      </a>
+      <li class="nested" [class.expand]="showMenu === 'docsSaida'">
+        <ul class="submenu">
+          <ng-template template ngFor let-ifunc="index" let-cFunc="count" let-func
+            [ngForOf]="User.Funcoes['Docs_de_Saida']">
+            <li>
+              <a [routerLink]="[func.CaminhoNovo]" [queryParams]="{ modelo: func.FuncClickNovo,Tipo:1 }"
+                [routerLinkActive]="['router-link-active']" class="list-group-item" skipLocationChange=true>
+                <i class="fa fa-fw  {{func.IconeNovo}}" matTooltip="{{func.Descricao}}"></i>
+                <span>&nbsp;{{func.Descricao}}</span>
+              </a>
+            </li>
+          </ng-template>
+        </ul>
+      </li>
+    </div>
+
+    <!--Exportacao-->
+    <ng-template template ngFor let-ifunc="index" let-cFunc="count" let-func [ngForOf]="User.Funcoes['Exportacao']">
+      <a [routerLink]="[func.CaminhoNovo]" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <i class="fa fa-fw {{func.IconeNovo}}" matTooltip="{{'MnuExportacao' | translate}}"></i>&nbsp;
+        <span>{{'MnuExportacao' | translate}}</span>
+      </a>
+    </ng-template>
+
+    <!--Relaorios-->
+    <div class="nested-menu" *ngIf="User.Funcoes['Relatorios']">
+      <a class="list-group-item" (click)="addExpandClass('rel')">
+        <i class="fa fa-fw fa-pie-chart" matTooltip="{{'Relatorios' | translate}}"></i>&nbsp;
+        <span>{{'MnuRelatorios' | translate}}</span>
+      </a>
+      <li class="nested" [class.expand]="showMenu === 'rel'">
+        <ul class="submenu">
+          <ng-template template ngFor let-ifunc="index" let-cFunc="count" let-func [ngForOf]="User.Funcoes['Relatorios']">
+            <li>
+              <a [routerLink]="[func.CaminhoNovo]" [queryParams]="{ id: func.FuncClickNovo }"
+                [routerLinkActive]="['router-link-active']" class="list-group-item" skipLocationChange=true>
+                <i class="fa fa-fw  {{func.IconeNovo}}" matTooltip="{{func.Descricao}}"></i>
+                <span>&nbsp;{{func.Descricao}}</span>
+              </a>
+            </li>
+          </ng-template>
+        </ul>
+      </li>
+    </div>
+
+    <!--Lode eventos-->
+    <ng-template template ngFor let-ifunc="index" let-cFunc="count" let-func [ngForOf]="User.Funcoes['Log_de_eventos']">
+      <a [routerLink]="[func.CaminhoNovo]" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <i class="fa fa-fw {{func.IconeNovo}}" matTooltip="{{'MnuLogEventos' | translate}}"></i>&nbsp;
+        <span>{{'MnuLogEventos' | translate}}</span>
+      </a>
+    </ng-template>
+
+    <!--E-mail com erros-->
+    <ng-template template ngFor let-ifunc="index" let-cFunc="count" let-func [ngForOf]="User.Funcoes['E-mails_nao_processados']">
+      <a [routerLink]="[func.CaminhoNovo]" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <i class="fa fa-fw {{func.IconeNovo}}" matTooltip="{{'MnuIntMail' | translate}}"></i>&nbsp;
+        <span>{{'MnuIntMail' | translate}}</span>
+      </a>
+    </ng-template>
+
+
+    <!--E-mail com erros-->
+    <!-- <ng-template template ngFor let-ifunc="index" let-cFunc="count" let-func [ngForOf]="User.Funcoes['Email_Error']">
+      <a [routerLink]="[func.CaminhoNovo]" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <i class="fa fa-fw {{func.IconeNovo}}" matTooltip="{{'MnuEmailError' | translate}}"></i>&nbsp;
+        <span>{{'MnuEmailError' | translate}}</span>
+      </a>
+    </ng-template> -->
+
+
+  </div>
+  <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
+    <i class="fa fa-fw fa-angle-double-{{collapsed?'right':'left'}}"
+      matTooltip="{{ 'EsconderMenu' | translate }}"></i>&nbsp;
+    <span>{{ 'EsconderMenu' | translate }}</span>
+  </div>
+</nav>

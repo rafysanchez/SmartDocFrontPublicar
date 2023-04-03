@@ -1,0 +1,142 @@
+<app-spinner></app-spinner>
+<section class="main-container" [ngClass]="{collapsed: collapedSideBar}">
+  <div [@routerTransition]>
+    <app-notificacao></app-notificacao>
+    <app-page-header [heading]="'MnuCxEntrada'" [icon]="'fa-at'"></app-page-header>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col">
+          <div class="pull-right">
+            <input type="submit" class="btn btn-outline-success btn-sm" value="{{ 'BtnSalvar' | translate}}" />
+            &nbsp;
+            <input type="button" class="btn btn-outline-dark btn-sm" value="{{ 'Voltar' | translate}}"
+              (click)="Voltar()" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+
+          <mat-form-field class="full-width">
+            <mat-label>{{'OptCxCli' | translate}}</mat-label>
+            <mat-select formControlName="CustomerId" (selectionChange)='onSubmit()'>
+              <mat-option> </mat-option>
+              <mat-option *ngFor="let filters of Cnpjs" [value]="filters.Id"
+                matTooltip="{{MontarNomeCli(filters.CNPJ.toString(),filters.Name)}}">
+                {{MontarNomeCli(filters.CNPJ.toString(),filters.Name)}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="Mail" #Email placeholder="Email" [errorStateMatcher]="matcher"
+              maxlength="120" required>
+            <mat-error *ngIf="f.Mail.hasError('required')">
+              {{ 'MsgEmailObri' | translate }}
+            </mat-error>
+            <mat-error *ngIf="f.Mail.hasError('email')">
+              {{'MgsErroEmail' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="Service" #Service placeholder="{{'InputCxServico' | translate}}"
+              [errorStateMatcher]="matcher" maxlength="100" required>
+            <mat-error *ngIf="f.Service.hasError('required')">
+              {{ 'MsgServicoObri' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field class="full-width">
+            <mat-label>{{'InputCxProcotolo' | translate}}</mat-label>
+            <mat-select formControlName="Protocol" required [errorStateMatcher]="matcher">
+              <mat-option value="IMAP">IMAP</mat-option>
+              <mat-option value="POP">POP</mat-option>
+              <mat-option value="POP3">POP3</mat-option>
+              <mat-option value="SMTP">SMTP</mat-option>
+              <mat-option value="EXCHANGE">EXCHANGE</mat-option>
+              <mat-option value="MSGRAPH">MS GRAPH</mat-option>
+            </mat-select>
+            <mat-error *ngIf="f.Protocol.hasError('required')">
+              {{ 'MsgProtocoloObri' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-2">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="Port" #Port placeholder="{{'InputCxPorta' | translate}}"
+              [errorStateMatcher]="matcher" maxlength="9"  mask="999999999">
+            <mat-error *ngIf="f.Port.hasError('required')">
+              {{ 'MsgPortaObri' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="User" #User placeholder="{{'InputCxUsuario' | translate}}"
+              [errorStateMatcher]="matcher" maxlength="200">
+            <mat-error *ngIf="f.User.hasError('required')">
+              {{ 'MsgUsuarioObri' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field class="full-width">
+            <input type="password" matInput formControlName="Password" #User
+              placeholder="{{'InputCxSenha' | translate}}" [errorStateMatcher]="matcher" maxlength="100">
+            <mat-error *ngIf="f.Password.hasError('required')">
+              {{ 'MsgSenhaObri' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-2">
+          <mat-checkbox formControlName="SSL" [checked]="true" translate>SSL
+          </mat-checkbox>
+        </div>
+        <div class="col-sm-2">
+          <mat-checkbox formControlName="Active" [checked]="true" translate>{{ 'InputGrpAtivo' | translate }}
+          </mat-checkbox>
+        </div>
+      </div>
+
+      <!-- inicio  alteracao para office 365-->
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field class="full-width">
+            <input  matInput formControlName="ClientId" #ClientId placeholder="ClientId"
+              maxlength="100" >
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-6">
+          <mat-form-field class="full-width">
+            <input  matInput formControlName="ClientSecret" #ClientSecret placeholder="ClientSecret"
+              maxlength="100" >
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field class="full-width">
+            <input  matInput formControlName="TenantId" #TenantId placeholder="TenantId" 
+             maxlength="100" >
+          </mat-form-field>
+        </div>
+      </div>
+
+   <!-- fim  alteracao para office 365-->
+
+
+  </form>
+  </div>
+</section>
