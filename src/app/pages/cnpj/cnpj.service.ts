@@ -12,25 +12,23 @@ import { GrupoEntity, CustomerEntity } from '../entity';
 })
 export class CnpjService {
   myheader: HttpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-  
+
   constructor(private http: HttpClient) { }
 
-  public RetGrupos(Token: string, Grupo: GrupoEntity){
-    let Url: string = "/back/api/group/" + Token + "/RetActiveGrupos";
+  public RetGrupos(Grupo: GrupoEntity) {
+    const Url = '/back/api/group/RetActiveGrupos';
     return this.http.post(Url, Grupo, { headers: this.myheader });
   }
 
-  public Save(Token:string,Customer:CustomerEntity)
-  {
-    let Url: string = "/back/api/customer/" + Token;
+  public Save(Customer: CustomerEntity) {
+    const Url = '/back/api/customer/saveCustomer';
     return this.http.post(Url, Customer, { headers: this.myheader });
 
   }
 
-  public GetById(Token:string,Id: number)
-  {
-    let Url: string = "/back/api/customer/" + Token + "/" + Id;
-    return this.http.get(Url);
+  public GetById(Customer: CustomerEntity) {
+    const Url = '/back/api/customer/GetCustomerById';
+    return this.http.post(Url, Customer, { headers: this.myheader } );
 
   }
 }

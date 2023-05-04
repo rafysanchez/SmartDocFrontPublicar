@@ -11,7 +11,7 @@ import { LanguageTranslationModule, ConfirmacaoService, NotificacaoComponent,
   SpinnerComponent, TraduzirErro, VerificarTpErro } from '../shared';
 import { Router } from '@angular/router';
 import { slideToTop } from 'src/app/router.animations';
-import { LoginSapResponse, EmailEntity, agGridParamEntity } from '../entity';
+import { LoginSapResponse, EmailEntity, AgGridParamEntity } from '../entity';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IGetRowsParams } from 'ag-grid-community';
 import { agGridReturnEntity } from '../entity/agGridReturn';
@@ -183,7 +183,7 @@ export class EmailsComponent implements OnInit {
     // this.RequestCustomers();
     const datasource = {
       getRows: (params2: IGetRowsParams) => {
-        const GridParam: agGridParamEntity = new agGridParamEntity();
+        const GridParam: AgGridParamEntity = new AgGridParamEntity();
         GridParam.startRow = params2.startRow;
         GridParam.endRow = params2.endRow;
         GridParam.filterModel = JSON.stringify(params2.filterModel);
@@ -215,8 +215,10 @@ export class EmailsComponent implements OnInit {
     this.router.navigate(['principal/email']);
   }
 
-  EditarLinha(e) {
+  EditarLinha(e ) {
     const Email: EmailEntity = e.rowData;
+    console.log('emailId', Email.Id);
+
     this.router.navigate(['principal/email'], { queryParams: { id: Email.Id }, skipLocationChange: true });
   }
 
@@ -243,7 +245,7 @@ export class EmailsComponent implements OnInit {
   }
 
   BuscarEmails(): void {
-    const GridParam: agGridParamEntity = new agGridParamEntity();
+    const GridParam: AgGridParamEntity = new AgGridParamEntity();
     GridParam.startRow = 0;
     GridParam.endRow = 100;
     GridParam.filterModel = JSON.stringify(this.params.filterModel);

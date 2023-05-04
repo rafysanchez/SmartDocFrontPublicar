@@ -14,7 +14,7 @@ import {
 } from '../shared';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginSapResponse, GrupoEntity, agGridParamEntity } from '../entity';
+import { LoginSapResponse, GrupoEntity, AgGridParamEntity } from '../entity';
 import { IGetRowsParams } from 'ag-grid-community';
 import { agGridReturnEntity } from '../entity/agGridReturn';
 
@@ -61,11 +61,13 @@ export class GruposComponent implements OnInit {
 
   ExcluirLinha(e) {
     const Grupo: GrupoEntity = e.rowData;
+    Grupo.Token = this.User.Token;
+    Grupo.Branch = this.User.Branch;
     this.confirmationDialogService.confirm('TitlePopExcluir', 'MsgExcluir')
       .then((confirmed) => {
         if (confirmed) {
           this.loading.Mostrar();
-          this.gruposservice.Excluir(this.User.Token, Grupo.Id).subscribe((data) => {
+          this.gruposservice.Excluir(Grupo).subscribe((data) => {
             this.loading.Fechar();
             if (data === true) {
               this.RequestCustomers();
@@ -152,7 +154,7 @@ export class GruposComponent implements OnInit {
     const datasource = {
       // tslint:disable-next-line: no-shadowed-variable
       getRows: (params: IGetRowsParams) => {
-        const GridParam: agGridParamEntity = new agGridParamEntity();
+        const GridParam: AgGridParamEntity = new AgGridParamEntity();
         GridParam.startRow = params.startRow;
         GridParam.endRow = params.endRow;
         GridParam.filterModel = JSON.stringify(params.filterModel);
@@ -182,7 +184,7 @@ export class GruposComponent implements OnInit {
 
 
   RequestCustomers() {
-    const GridParam: agGridParamEntity = new agGridParamEntity();
+    const GridParam: AgGridParamEntity = new AgGridParamEntity();
     GridParam.startRow = 0;
     GridParam.endRow = 100;
     GridParam.filterModel = JSON.stringify(this.params.filterModel);

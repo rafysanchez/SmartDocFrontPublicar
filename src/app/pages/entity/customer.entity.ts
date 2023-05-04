@@ -1,10 +1,5 @@
 import { GrupoEntity } from '.';
 
-/**
- * @description Classe de customer
- * @author Alexandre A. Jacobino
- * @since 1.0.0
- */
 export class CustomerEntity {
 
     constructor(public Id?: number,

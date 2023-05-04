@@ -5,8 +5,10 @@
  */
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { slideToTop } from 'src/app/router.animations';
-import { NotificacaoComponent, SpinnerComponent, LanguageTranslationModule,
-         TraduzirErro, MyErrorStateMatcher, VerificarTpErro } from '../shared';
+import {
+  NotificacaoComponent, SpinnerComponent, LanguageTranslationModule,
+  TraduzirErro, MyErrorStateMatcher, VerificarTpErro
+} from '../shared';
 import { LoginSapResponse } from '../entity';
 import { NotifierService } from 'angular-notifier';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -45,8 +47,8 @@ export class PesqchaveComponent implements OnInit {
   @ViewChild('Chave', { static: true }) nameField: ElementRef;
 
   constructor(private pesqchaveservice: PesqchaveService, private Notifi: NotifierService,
-              private spinner: NgxSpinnerService, private translate: LanguageTranslationModule,
-              private router: Router, private formBuilder: FormBuilder) {
+    private spinner: NgxSpinnerService, private translate: LanguageTranslationModule,
+    private router: Router, private formBuilder: FormBuilder) {
 
     this.Notificacao = new NotificacaoComponent(Notifi);
     this.User = JSON.parse(localStorage.getItem('User'));
@@ -81,9 +83,10 @@ export class PesqchaveComponent implements OnInit {
         if (Arquivos != null) {
           let Doc: RetArquivoEntity;
           // tslint:disable-next-line: only-arrow-functions
-          Doc = Arquivos.filter(function(element) {
+          Doc = Arquivos.filter(function (element) {
             if (element.NmFile != null) {
-              if ((element.NmFile.indexOf('DANFE_') >= 0) || (element.NmFile.indexOf('DACTE_')) >= 0) {
+              if ((element.NmFile.indexOf('DACTE_') >= 0) || (element.NmFile.indexOf('DANFE_')) >= 0
+                || (element.NmFile.indexOf('DOC_')) >= 0) {
                 return element;
               }
             }

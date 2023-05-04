@@ -5,7 +5,7 @@
  */
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { ExportacaoEntity, agGridParamEntity } from '../entity';
+import { ExportacaoEntity, AgGridParamEntity } from '../entity';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class ExportacoesService {
 
   constructor(private http: HttpClient) { }
 
-  public RequestExportacoes(Dados: agGridParamEntity) {
+  public RequestExportacoes(Dados: AgGridParamEntity) {
     const Url = '/back/api/Export/RetExport';
 
     return this.http.post(Url, Dados, { headers: this.myheader });

@@ -7,7 +7,7 @@ import { UserLoggedEntity } from './../entity/userlogged.entity';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { DocumentosFiltrosEntity, GridLayoutFilterEntity, CustomerEntity, GridLayoutEntity,
-        SapRequestEntity, agGridParamEntity, DocumentosAnnotationsEntity } from '../entity';
+        SapRequestEntity, AgGridParamEntity, DocumentosAnnotationsEntity } from '../entity';
 import { Observable } from 'rxjs';
 import { FuncoesGenericas } from '../shared';
 
@@ -22,7 +22,7 @@ export class DocumentosService {
     const Url = '/back/api/documents/RetDocs';
     return this.http.post(Url, Dados, { headers: this.myheader });
   }
-  public GetDocsAg(Dados: agGridParamEntity): Observable<any> {
+  public GetDocsAg(Dados: AgGridParamEntity): Observable<any> {
     const Url = '/back/api/documents/RetDocs';
     return this.http.post(Url, Dados, { headers: this.myheader });
   }

@@ -5,7 +5,7 @@
  */
 
 
-export class agGridParamEntity {
+export class AgGridParamEntity {
 
     constructor(public startRow?: number,
                 public endRow?: number,

@@ -2,7 +2,7 @@ import { AbstractControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { formatDate } from '@angular/common';
 import { IGetRowsParams } from 'ag-grid-community';
-import { agGridParamEntity } from '../entity';
+import { AgGridParamEntity } from '../entity';
 
 /**
  * @description Funções genericas para o sistema
@@ -19,7 +19,7 @@ export class FuncoesGenericas {
     static CriarFiltroGrid(Objeto: any) {
         var datasource = {
             getRows: (params: IGetRowsParams) => {
-                const GridParam: agGridParamEntity = new agGridParamEntity();
+                const GridParam: AgGridParamEntity = new AgGridParamEntity();
                 GridParam.startRow = params.startRow;
                 GridParam.endRow = params.endRow;
                 GridParam.filterModel = params.filterModel;

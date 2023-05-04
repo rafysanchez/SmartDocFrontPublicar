@@ -5,7 +5,7 @@
  */
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { CustomerEntity, agGridParamEntity } from '../entity';
+import { CustomerEntity, AgGridParamEntity } from '../entity';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class CnpjsService {
   myheader: HttpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient) { }
 
-  public RequestCnpjs(CNPJ: agGridParamEntity) {
+  public RequestCnpjs(CNPJ: AgGridParamEntity) {
     const Url = '/back/api/customer/RetCnpjs';
 
     return this.http.post(Url, CNPJ, { headers: this.myheader });

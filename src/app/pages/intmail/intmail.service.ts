@@ -5,7 +5,7 @@
  */
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { DocumentosEmailFiltrosEntity, agGridParamEntity} from '../entity';
+import { DocumentosEmailFiltrosEntity, AgGridParamEntity} from '../entity';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class IntmailService {
      return this.http.post(Url, Dados, { headers: this.myheader });
    } */
 
-   public RequestDocumentEmail(Dados: agGridParamEntity) {
+   public RequestDocumentEmail(Dados: AgGridParamEntity) {
     const Url = '/back/api/emailserror/RetDocs';
 
     return this.http.post(Url, Dados, { headers: this.myheader });

@@ -76,8 +76,9 @@ export class UsuarioComponent implements OnInit {
     const Grupo: GrupoEntity = new GrupoEntity();
     Grupo.Branch = this.User.Branch;
     Grupo.Active = true;
+    Grupo.Token = this.User.Token;
     // tslint:disable-next-line:max-line-length
-    const Grupos = this.usuarioservice.RetGrupos(this.User.Token, Grupo).pipe(catchError(error => of(VerificarTpErro(this.router, error.error.ExceptionMessage, this.Notificacao, this.translate))));
+    const Grupos = this.usuarioservice.RetGrupos(Grupo).pipe(catchError(error => of(VerificarTpErro(this.router, error.error.ExceptionMessage, this.Notificacao, this.translate))));
     // tslint:disable-next-line:max-line-length
     const Manifestacoes = this.usuarioservice.RetManifestacoes(this.User.Token).pipe(catchError(error => of(VerificarTpErro(this.router, error.error.ExceptionMessage, this.Notificacao, this.translate))));
     // tslint:disable-next-line:max-line-length
@@ -193,11 +194,12 @@ export class UsuarioComponent implements OnInit {
     User.Email = this.registerForm.controls.Email.value;
     User.Branch = this.User.Branch;
     User.Id = this.IdUsuario;
+    User.Token = this.User.Token;
     this.confirmationDialogService.confirm('TitlePopSalvar', 'MsgSalvar')
       .then((confirmed) => {
         if (confirmed) {
           this.loading.Mostrar();
-          this.usuarioservice.Save(this.User.Token, User).subscribe((data) => {
+          this.usuarioservice.Save(User).subscribe((data) => {
             this.loading.Fechar();
             const UserRet: UserSapResponseEntity = data;
             if (UserRet != null) {

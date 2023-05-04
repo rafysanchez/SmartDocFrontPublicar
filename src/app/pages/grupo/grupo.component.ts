@@ -30,9 +30,9 @@ export class GrupoComponent implements OnInit {
   @ViewChild('Name', { static: true }) nameField: ElementRef;
 
   constructor(private gruposervice: GrupoService, private Notifi: NotifierService,
-    private spinner: NgxSpinnerService, private translate: LanguageTranslationModule,
-    private router: Router, private confirmationDialogService: ConfirmacaoService,
-    private Activatedroute: ActivatedRoute) {
+              private spinner: NgxSpinnerService, private translate: LanguageTranslationModule,
+              private router: Router, private confirmationDialogService: ConfirmacaoService,
+              private Activatedroute: ActivatedRoute) {
 
     this.Notificacao = new NotificacaoComponent(Notifi);
     this.User = JSON.parse(localStorage.getItem('User'));
@@ -106,12 +106,13 @@ export class GrupoComponent implements OnInit {
     Grupo = this.registerForm.value;
     Grupo.Branch = this.User.Branch;
     Grupo.Id = this.IdGroup;
+    Grupo.Token = this.User.Token;
 
     this.confirmationDialogService.confirm('TitlePopSalvar', 'MsgSalvar')
       .then((confirmed) => {
         if (confirmed) {
           this.loading.Mostrar();
-          this.gruposervice.Save(this.User.Token, Grupo).subscribe((data) => {
+          this.gruposervice.Save(Grupo).subscribe((data) => {
             this.loading.Fechar();
             if (data != null) {
               if (Grupo.Id <= 0) {

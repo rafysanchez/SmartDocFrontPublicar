@@ -45,6 +45,7 @@ export class EmailComponent implements OnInit {
     this.User = JSON.parse(localStorage.getItem('User'));
     this.loading = new SpinnerComponent(spinner);
     this.IdEmail = this.Activatedroute.snapshot.queryParamMap.get('id') || 0;
+    console.log('idEmail', this.IdEmail) ;
   }
 
   ngOnInit() {
@@ -73,6 +74,7 @@ export class EmailComponent implements OnInit {
     Customer.Active = true;
     Customer.Token = this.User.Token;
     Customer.Todos = true;
+    Customer.Id = this.IdEmail;
     let Cnpj: Observable<any>;
 
     if (this.IdEmail > 0) {

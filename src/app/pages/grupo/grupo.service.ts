@@ -11,8 +11,8 @@ export class GrupoService {
 
   constructor(private http: HttpClient) { }
 
-  public Save(Token: string, Grupo: GrupoEntity) {
-    const Url = '/back/api/group/' + Token;
+  public Save(Grupo: GrupoEntity) {
+    const Url = '/back/api/group/SaveGroup' ;
     return this.http.post(Url, JSON.stringify(Grupo), { headers: this.myheader });
 
   }

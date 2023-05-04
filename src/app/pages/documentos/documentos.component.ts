@@ -14,7 +14,7 @@ import { slideToTop } from 'src/app/router.animations';
 import {
   LoginSapResponse, DocumentosFiltrosEntity, GridLayoutFilterEntity,
   GridLayoutRetEntity, CustomerEntity, EstadosEntity, GridLayoutEntity, GridLayoutFieldEntity,
-  SapRequestEntity, SapResponseEntity, agGridParamEntity, DocumentosAnnotationsEntity
+  SapRequestEntity, SapResponseEntity, AgGridParamEntity, DocumentosAnnotationsEntity
 } from '../entity';
 import { of, forkJoin, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -300,7 +300,7 @@ export class DocumentosComponent implements OnInit, OnDestroy {
     // this.RequestCustomers();
     const datasource = {
       getRows: (params2: IGetRowsParams) => {
-        const GridParam: agGridParamEntity = new agGridParamEntity();
+        const GridParam: AgGridParamEntity = new AgGridParamEntity();
         GridParam.startRow = params2.startRow;
         GridParam.endRow = params2.endRow;
         GridParam.filterModel = JSON.stringify(params2.filterModel);
@@ -318,7 +318,7 @@ export class DocumentosComponent implements OnInit, OnDestroy {
         this.documentosservice.GetDocsAg(GridParam).subscribe((data) => {
           const retorno = data as agGridReturnEntity;
           this.rowData = retorno.rows;
-          params.successCallback(this.rowData, retorno.lastRow);
+          params2.successCallback(this.rowData, retorno.lastRow);
         },
           (err: HttpErrorResponse) => {
             VerificarTpErro(this.router, err.error.ExceptionMessage, this.Notificacao, this.translate);
@@ -617,7 +617,7 @@ export class DocumentosComponent implements OnInit, OnDestroy {
     // this.RequestCustomers();
     const datasource = {
       getRows: (params: IGetRowsParams) => {
-        const GridParam: agGridParamEntity = new agGridParamEntity();
+        const GridParam: AgGridParamEntity = new AgGridParamEntity();
         GridParam.startRow = params.startRow;
         GridParam.endRow = params.endRow;
         GridParam.filterModel = JSON.stringify(params.filterModel);

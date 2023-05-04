@@ -5,16 +5,16 @@ import { UserEntity } from './user.entity';
  * @author Alexandre A. Jacobino
  * @since 1.0.0
  */
-export class FuncionalidadesEntity{
+export class FuncionalidadesEntity {
 
-    constructor(public Id?:number,
-                public Descricao?:string,
-                public DsMenuPrinc?:string,
-                public TipoDoc?:string,
-                public CaminhoNovo?:string,
-                public FuncClickNovo?:string,
-                public IconeNovo?:string,
-                public Ordem?:number,
-                public Usuario?:UserEntity[]){}
+    constructor(public Id?: number,
+                public Descricao?: string,
+                public DsMenuPrinc?: string,
+                public TipoDoc?: string,
+                public CaminhoNovo?: string,
+                public FuncClickNovo?: string,
+                public IconeNovo?: string,
+                public Ordem?: number,
+                public Usuario?: UserEntity[]) {}
 
 }

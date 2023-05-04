@@ -6,11 +6,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { LanguageTranslationModule, ConfirmacaoService, NotificacaoComponent, SpinnerComponent,
   VerificarTpErro, FuncoesGenericas, TraduzirErro } from '../shared';
 import { Router } from '@angular/router';
-import { LoginSapResponse, UserEntity, agGridParamEntity } from '../entity';
+import { LoginSapResponse, UserEntity, AgGridParamEntity } from '../entity';
 import { slideToTop } from 'src/app/router.animations';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IGetRowsParams } from 'ag-grid-community';
 import { agGridReturnEntity } from '../entity/agGridReturn';
+import { UserRequest } from '../entity/userRequest';
 
 @Component({
   selector: 'app-usuarios',
@@ -164,7 +165,7 @@ export class UsuariosComponent implements OnInit {
     const datasource = {
       // tslint:disable-next-line:no-shadowed-variable
       getRows: (params: IGetRowsParams) => {
-        const GridParam: agGridParamEntity = new agGridParamEntity();
+        const GridParam: AgGridParamEntity = new AgGridParamEntity();
         GridParam.startRow = params.startRow;
         GridParam.endRow = params.endRow;
         GridParam.filterModel = JSON.stringify(params.filterModel);
@@ -214,13 +215,20 @@ export class UsuariosComponent implements OnInit {
       .then((confirmed) => {
         if (confirmed) {
           this.loading.Mostrar();
-          this.usuariosservice.Excluir(this.User.Token, User.Id).subscribe((data) => {
+
+          const userRequest: UserRequest = new UserRequest();
+          userRequest.Id = User.Id;
+          userRequest.Token = this.User.Token;
+          userRequest.Branch = this.User.Branch;
+          
+          this.usuariosservice.Excluir(userRequest).subscribe((data) => {
             this.loading.Fechar();
             if (data != null) {
-              this.RequestUsuarios();
               this.Notificacao.showNotification('info', TraduzirErro('MgsDadosExcluidos', this.translate));
+              this.RequestUsuarios();
             } else {
               this.Notificacao.showNotification('info', TraduzirErro('MsgDadosExcluirErro', this.translate));
+              this.RequestUsuarios();
             }
           },
             (err: HttpErrorResponse) => {
@@ -235,7 +243,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   RequestUsuarios() {
-    const GridParam: agGridParamEntity = new agGridParamEntity();
+    const GridParam: AgGridParamEntity = new AgGridParamEntity();
     GridParam.startRow = 0;
     GridParam.endRow = 100;
     GridParam.filterModel = JSON.stringify(this.params.filterModel);

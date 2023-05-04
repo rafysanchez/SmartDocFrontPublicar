@@ -8,7 +8,7 @@ import { OrderModule } from 'ngx-order-pipe';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { slideToTop } from 'src/app/router.animations';
 import { NotificacaoComponent, SpinnerComponent, LanguageTranslationModule, ConfirmacaoService, VerificarTpErro } from '../shared';
-import { LoginSapResponse, LogEntity, agGridParamEntity } from '../entity';
+import { LoginSapResponse, LogEntity, AgGridParamEntity } from '../entity';
 import { NotifierService } from 'angular-notifier';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LogeventosService } from './logeventos.service';
@@ -113,7 +113,7 @@ export class LogeventosComponent implements OnInit {
     const datasource = {
       // tslint:disable-next-line: no-shadowed-variable
       getRows: (params: IGetRowsParams) => {
-        const GridParam: agGridParamEntity = new agGridParamEntity();
+        const GridParam: AgGridParamEntity = new AgGridParamEntity();
         GridParam.startRow = params.startRow;
         GridParam.endRow = params.endRow;
         GridParam.filterModel = JSON.stringify(params.filterModel);
@@ -140,7 +140,7 @@ export class LogeventosComponent implements OnInit {
   }
 
   ChamarDados() {
-    const GridParam: agGridParamEntity = new agGridParamEntity();
+    const GridParam: AgGridParamEntity = new AgGridParamEntity();
     GridParam.startRow = 0;
     GridParam.endRow = 100;
     GridParam.filterModel = JSON.stringify(this.params.filterModel);

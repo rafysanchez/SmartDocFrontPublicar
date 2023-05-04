@@ -18,17 +18,13 @@ export class EmailService {
   constructor(private http: HttpClient) { }
 
   public RequestCnpjs(CNPJ: CustomerEntity): Observable<any> {
-    const Url = '/back/api/email/RetCustDisp/';
-
-
+    const Url = '/back/api/email/RetCustDisp';
     return this.http.post(Url, CNPJ, { headers: this.myheader });
-
   }
 
   public Save(Email: EmailEntity) {
     const Url = '/back/api/email/saveEmail';
     return this.http.post(Url, Email, { headers: this.myheader });
-
   }
 
   public GetById(token: string, id: number, branch: string): Observable<any> {

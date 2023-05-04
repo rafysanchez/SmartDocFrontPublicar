@@ -14,6 +14,6 @@ import { RetArquivoEntity } from './retarquivo.entity';
 export class RetDocCompleteEntity {
 
     constructor(public DocumentHeader?: DocumentosEntity,
-                public RetArquivo?: Array<RetArquivoEntity>){}
+                public RetArquivo?: Array<RetArquivoEntity>) {}
 
 }

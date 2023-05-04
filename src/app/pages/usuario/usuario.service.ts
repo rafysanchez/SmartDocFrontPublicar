@@ -11,8 +11,8 @@ export class UsuarioService {
   myheader: HttpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient) { }
 
-  public RetGrupos(Token: string, Grupo: GrupoEntity): Observable<any> {
-    const Url: string = '/back/api/group/' + Token + '/RetActiveGrupos';
+  public RetGrupos(Grupo: GrupoEntity): Observable<any> {
+    const Url = '/back/api/group/RetActiveGrupos';
     return this.http.post(Url, Grupo, { headers: this.myheader });
   }
 
@@ -31,8 +31,8 @@ export class UsuarioService {
     return this.http.post(Url, null);
   }
 
-  public Save(Token: string, User: UserEntity) {
-    const Url: string = '/back/api/user/' + Token;
+  public Save(User: UserEntity) {
+    const Url = '/back/api/user/SaveUser';
     return this.http.post(Url, User, { headers: this.myheader });
   }
 

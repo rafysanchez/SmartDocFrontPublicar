@@ -297,10 +297,11 @@ export class DoccomplementarComponent implements OnInit {
 
       let Doc: RetArquivoEntity;
       // verifica se existe dacte ou danfe
+      debugger;
       if (this.modelo === 'NF-e') {
         Doc = this.DocAnexos.filter(element => {
           if (element.NmFile != null) {
-            if ((element.NmFile.indexOf('DANFE_') >= 0) || (element.NmFile.indexOf('DACTE_')) >= 0) {
+            if ((element.NmFile.indexOf('DANFE_') >= 0) || (element.NmFile.indexOf('DACTE_')) >= 0 || (element.NmFile.indexOf('DOC_')) >= 0) {
               return element;
             }
           }
@@ -317,12 +318,14 @@ export class DoccomplementarComponent implements OnInit {
         if (Doc === undefined) {
          Doc = this.DocAnexos.filter(element => {
            if (element.NmFile != null) {
-             if ((element.Tipo === TipoArquivo.LINK) || (element.Tipo === TipoArquivo.EMAIL)) {
+             if ((element.Tipo === TipoArquivo.LINK) || (element.Tipo === TipoArquivo.EMAIL) || (element.Tipo === TipoArquivo.XML)) {
                return element;
              }
            }
          })[0];
         }
+
+
       }
 
       if (Doc !== undefined) {

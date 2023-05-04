@@ -5,13 +5,13 @@ import { ManifestacoesEntity } from './manifestacoes.entity';
  * @author Alexandre A. Jacobino
  * @since 1.0.0
  */
-export class UserLoggedEntity{
-   
-    constructor(public Id?:number,
-                public Name?:string,
-                public Email?:string,
-                public IsAdmin?:boolean,
-                public Manifestacoes?:ManifestacoesEntity[]        
-        ){}
+export class UserLoggedEntity {
+
+    constructor(public Id?: number,
+                public Name?: string,
+                public Email?: string,
+                public IsAdmin?: boolean,
+                public Manifestacoes?: ManifestacoesEntity[]
+        ) {}
 
 }

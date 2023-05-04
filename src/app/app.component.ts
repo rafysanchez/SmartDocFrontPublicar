@@ -19,25 +19,37 @@ declare var $: any;
 })
 export class AppComponent {
   private Notificacao: NotificacaoComponent;
-  constructor(private titleService: Title, private bnIdle: BnNgIdleService, private router: Router,
-              private Notifi: NotifierService, private translate: LanguageTranslationModule) {
+  constructor(private titleService: Title, private bnIdle: BnNgIdleService,
+    private router: Router, private Notifi: NotifierService,
+    private translate: LanguageTranslationModule) {
     // **Define o titulo das páginas */
     this.titleService.setTitle('SmartDocx Platform Web');
 
     this.Notificacao = new NotificacaoComponent(Notifi);
 
     // **Seta o timeout de sessão */
-    this.bnIdle.startWatching(3600).subscribe((res) => {
-      if (localStorage.getItem('User') !== null) {
-        // tslint:disable-next-line:no-shadowed-variable
-        this.bnIdle.startWatching(4600).subscribe((res) => {
-          if (res) {
-            this.Notificacao.showNotification('info', TraduzirErro('Sessão Expirada', this.translate));
-            this.router.navigate(['login']);
-          }
-        });
+    //   this.bnIdle.startWatching(3600).subscribe((res) => {
+    //     if (localStorage.getItem('User') !== null) {
+    //       // tslint:disable-next-line:no-shadowed-variable
+    //       this.bnIdle.startWatching(4600).subscribe((res) => {
+    //         if (res) {
+    //           this.Notificacao.showNotification('info', TraduzirErro('Sessão Expirada', this.translate));
+    //           this.router.navigate(['login']);
+    //         }
+    //       });
+    //     }
+    //   });
+
+    this.bnIdle.startWatching(600).subscribe((isTimedOut: boolean) => {
+      if (isTimedOut) {
+        console.log('session expired');
+        this.Notificacao.showNotification('info', TraduzirErro('Sessão Expirada', this.translate));
+        this.router.navigate(['login']);
       }
     });
+
+
+
   }
 
 }

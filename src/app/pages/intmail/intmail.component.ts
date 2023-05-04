@@ -6,7 +6,7 @@ import {
   LanguageTranslationModule, NotificacaoComponent, SpinnerComponent,
   VerificarTpErro, FuncoesGenericas, MyErrorStateMatcher, TraduzirErro, GridComponent
 } from '../shared';
-import { LoginSapResponse, DocumentosEmailEntity, DocumentosEmailFiltrosEntity, agGridParamEntity } from '../entity';
+import { LoginSapResponse, DocumentosEmailEntity, DocumentosEmailFiltrosEntity, AgGridParamEntity } from '../entity';
 import { NotifierService } from 'angular-notifier';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { IntmailService } from './intmail.service';
@@ -258,7 +258,7 @@ export class IntmailComponent implements OnInit {
     const datasource = {
       // tslint:disable-next-line: no-shadowed-variable
       getRows: (params: IGetRowsParams) => {
-        const GridParam: agGridParamEntity = new agGridParamEntity();
+        const GridParam: AgGridParamEntity = new AgGridParamEntity();
         GridParam.startRow = params.startRow;
         GridParam.endRow = params.endRow;
         GridParam.filterModel = JSON.stringify(params.filterModel);
@@ -295,7 +295,7 @@ export class IntmailComponent implements OnInit {
     // this.RequestCustomers();
     const datasource = {
       getRows: (params: IGetRowsParams) => {
-    const GridParam: agGridParamEntity = new agGridParamEntity();
+    const GridParam: AgGridParamEntity = new AgGridParamEntity();
     GridParam.startRow = 0;
     GridParam.endRow = 100;
     GridParam.filterModel = JSON.stringify(this.params.filterModel);

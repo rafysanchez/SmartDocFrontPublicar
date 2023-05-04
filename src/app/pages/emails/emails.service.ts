@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { EmailEntity, agGridParamEntity } from '../entity';
+import { EmailEntity, AgGridParamEntity } from '../entity';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class EmailsService {
   myheader: HttpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient) { }
 
-  public RequestEmails(Email: agGridParamEntity) {
+  public RequestEmails(Email: AgGridParamEntity) {
     const Url = '/back/api/email/RetEmails';
 
     return this.http.post(Url, Email, { headers: this.myheader });
@@ -23,7 +23,7 @@ export class EmailsService {
       Token: token
     };
 
-    const Url = '/back/api/email/excluir' ;
+    const Url = '/back/api/email/excluirEmail' ;
 
     return this.http.post(Url, JSON.stringify(obj), { headers: this.myheader });
 

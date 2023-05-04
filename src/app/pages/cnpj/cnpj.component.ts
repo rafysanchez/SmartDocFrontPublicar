@@ -36,7 +36,7 @@ export class CnpjComponent implements OnInit {
   IdCnpj: any;
 
   @ViewChild('allSelected', { static: false }) private allSelected: MatOption;
-  @ViewChild("Cnpj", { static: true }) nameField: ElementRef;
+  @ViewChild('Cnpj', { static: true }) nameField: ElementRef;
 
   constructor(private cnpjservice: CnpjService, private Notifi: NotifierService,
               private spinner: NgxSpinnerService, private translate: LanguageTranslationModule,
@@ -62,7 +62,7 @@ export class CnpjComponent implements OnInit {
       DtVencCert: ['', FuncoesGenericas.ValidDate]
     });
 
-    //verifica se foi chamado para alteração de dados
+    // verifica se foi chamado para alteração de dados
     if (this.IdCnpj > 0) {
       this.RetDadosCnpj();
     }
@@ -76,7 +76,12 @@ export class CnpjComponent implements OnInit {
   RetDadosCnpj(): void {
     this.loading.Mostrar();
     let Customer: CustomerEntity;
-    this.cnpjservice.GetById(this.User.Token, this.IdCnpj).subscribe((data) => {
+    const Customer2: CustomerEntity = new CustomerEntity();
+    Customer2.Token = this.User.Token;
+    Customer2.Id = this.IdCnpj;
+    Customer2.Branch = this.User.Branch;
+
+    this.cnpjservice.GetById(Customer2).subscribe((data) => {
       this.loading.Fechar();
       if (data != null) {
         Customer = data;
@@ -84,28 +89,28 @@ export class CnpjComponent implements OnInit {
         this.registerForm.controls.Name.setValue(Customer.Name);
         this.registerForm.controls.Description.setValue(Customer.Description);
         this.registerForm.controls.Active.setValue(Customer.Active);
-        this.registerForm.controls.DtVencCert.setValue(moment(Customer.DtVencCert).format("L"));
+        this.registerForm.controls.DtVencCert.setValue(moment(Customer.DtVencCert).format('L'));
         this.registerForm.controls.Groups.setValue(this.Grupos.filter(obj => {
-          return Customer.Groups.map(item => { return item.Id; }).includes(obj.Id);
+          return Customer.Groups.map(item => item.Id).includes(obj.Id);
         }));
       } else {
-        this.Notificacao.showNotification("info", TraduzirErro("MsgDadosErro", this.translate));
+        this.Notificacao.showNotification('info', TraduzirErro('MsgDadosErro', this.translate));
       }
     },
       (err: HttpErrorResponse) => {
         VerificarTpErro(this.router, err.error.ExceptionMessage, this.Notificacao, this.translate);
-      })
+      });
   }
 
   /**
    * Método para retornar os grupos cadastrados na branch
    */
   RetGrupos(): void {
-    let Grupo: GrupoEntity = new GrupoEntity();
+    const Grupo: GrupoEntity = new GrupoEntity();
     Grupo.Branch = this.User.Branch;
-    Grupo.Active=true;
-
-    this.cnpjservice.RetGrupos(this.User.Token, Grupo).subscribe((data) => {
+    Grupo.Active = true;
+    Grupo.Token = this.User.Token;
+    this.cnpjservice.RetGrupos(Grupo).subscribe((data) => {
       this.Grupos = data as GrupoEntity[];
     },
       (err: HttpErrorResponse) => {
@@ -121,8 +126,9 @@ export class CnpjComponent implements OnInit {
       this.allSelected.deselect();
       return false;
     }
-    if (this.registerForm.controls.Groups.value.length == this.Grupos.length)
+    if (this.registerForm.controls.Groups.value.length === this.Grupos.length) {
       this.allSelected.select();
+    }
 
   }
 
@@ -142,29 +148,31 @@ export class CnpjComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (!this.registerForm.valid) { return; }
-    let Customer: CustomerEntity = this.registerForm.value;
+    const Customer: CustomerEntity = this.registerForm.value;
     Customer.Branch = this.User.Branch;
+    Customer.Token = this.User.Token;
     Customer.Id = this.IdCnpj;
-    Customer.DtVencCert= new Date(this.registerForm.controls.DtVencCert.value.substring(4) + "-" + this.registerForm.controls.DtVencCert.value.substring(2,4) + "-" + this.registerForm.controls.DtVencCert.value.substring(0,2) + "T00:00:00");
+    Customer.DtVencCert =
+    new Date(this.registerForm.controls.DtVencCert.value.substring(4) + '-' 
+    + this.registerForm.controls.DtVencCert.value.substring(2, 4) + '-' 
+    + this.registerForm.controls.DtVencCert.value.substring(0, 2) + 'T00:00:00');
 
     this.confirmationDialogService.confirm('TitlePopSalvar', 'MsgSalvar')
       .then((confirmed) => {
         if (confirmed) {
           this.loading.Mostrar();
-          this.cnpjservice.Save(this.User.Token, Customer).subscribe((data) => {
+          this.cnpjservice.Save(Customer).subscribe((data) => {
             this.loading.Fechar();
             if (data != null) {
-              this.Notificacao.showNotification("info", TraduzirErro("MsgDadosSalvos", this.translate));
+              this.Notificacao.showNotification('info', TraduzirErro('MsgDadosSalvos', this.translate));
               if (Customer.Id <= 0) {
 
                 this.ngOnInit();
-              }
-              else {
+              } else {
                 this.Voltar();
               }
-            }
-            else {
-              this.Notificacao.showNotification("info", TraduzirErro("MsgDadosErro", this.translate));
+            } else {
+              this.Notificacao.showNotification('info', TraduzirErro('MsgDadosErro', this.translate));
             }
           },
             (err: HttpErrorResponse) => {

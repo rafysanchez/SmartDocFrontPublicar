@@ -6,12 +6,12 @@ import { UserEntity } from './user.entity';
  * @since 1.0.0
  */
 export class ManifestacoesEntity{
-   
-    constructor(public Id?:number,
-                public Modelo?:string,
-                public DescManifestacao?:string,
-                public TipoManifestacao?:boolean,
-                public Usuario?:UserEntity[]   
-        ){}
+
+    constructor(public Id?: number,
+                public Modelo?: string,
+                public DescManifestacao?: string,
+                public TipoManifestacao?: boolean,
+                public Usuario?: UserEntity[]
+        ) {}
 
 }

@@ -7,7 +7,7 @@ import { NotificacaoComponent, SpinnerComponent, LanguageTranslationModule, Veri
 import { NotifierService } from 'angular-notifier';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginSapResponse, CustomerEntity, agGridParamEntity } from '../entity';
+import { LoginSapResponse, CustomerEntity, AgGridParamEntity } from '../entity';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as moment from 'moment';
 import { IGetRowsParams } from 'ag-grid-community';
@@ -170,7 +170,7 @@ export class CnpjsComponent implements OnInit {
     this.params = params;
     const datasource = {
       getRows: (params2: IGetRowsParams) => {
-        const GridParam: agGridParamEntity = new agGridParamEntity();
+        const GridParam: AgGridParamEntity = new AgGridParamEntity();
         GridParam.startRow = params2.startRow;
         GridParam.endRow = params2.endRow;
         GridParam.filterModel = JSON.stringify(params2.filterModel);
@@ -237,7 +237,7 @@ export class CnpjsComponent implements OnInit {
   }
 
   BuscarCnpj(): void {
-    const GridParam: agGridParamEntity = new agGridParamEntity();
+    const GridParam: AgGridParamEntity = new AgGridParamEntity();
     GridParam.startRow = 0;
     GridParam.endRow = 100;
     GridParam.filterModel = JSON.stringify(this.params.filterModel);

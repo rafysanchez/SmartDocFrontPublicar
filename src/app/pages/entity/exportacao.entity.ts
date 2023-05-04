@@ -6,7 +6,7 @@ import { UserEntity } from './user.entity';
  * @since 1.0.0
  */
 export class ExportacaoEntity {
-   
+
     constructor(public Id?: number,
                 public UserId?: number,
                 public DocType?: string,

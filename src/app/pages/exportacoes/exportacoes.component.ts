@@ -13,7 +13,7 @@ import {
 } from '../shared';
 import { Router } from '@angular/router';
 import { slideToTop } from 'src/app/router.animations';
-import { LoginSapResponse, ExportacaoEntity, agGridParamEntity } from '../entity';
+import { LoginSapResponse, ExportacaoEntity, AgGridParamEntity } from '../entity';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IGetRowsParams } from 'ag-grid-community';
 import { agGridReturnEntity } from '../entity/agGridReturn';
@@ -176,7 +176,7 @@ export class ExportacoesComponent implements OnInit, OnDestroy {
     const datasource = {
       // tslint:disable-next-line: no-shadowed-variable
       getRows: (params: IGetRowsParams) => {
-        const GridParam: agGridParamEntity = new agGridParamEntity();
+        const GridParam: AgGridParamEntity = new AgGridParamEntity();
         GridParam.startRow = params.startRow;
         GridParam.endRow = params.endRow;
         GridParam.filterModel = JSON.stringify(params.filterModel);
@@ -241,7 +241,7 @@ export class ExportacoesComponent implements OnInit, OnDestroy {
   }
 
   ChamarDados() {
-    const GridParam: agGridParamEntity = new agGridParamEntity();
+    const GridParam: AgGridParamEntity = new AgGridParamEntity();
     GridParam.startRow = 0;
     GridParam.endRow = 100;
     GridParam.filterModel = JSON.stringify(this.params.filterModel);

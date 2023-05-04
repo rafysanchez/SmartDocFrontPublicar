@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { EmbedConfigEntity, LoginSapResponse } from '../entity';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { isInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { PowerBiRequest } from '../entity/PowerBiRequest';
 
 @Component({
   selector: 'app-dashboardAdm',
@@ -58,7 +59,11 @@ export class DashboardAdmComponent implements OnInit {
 
   MostrarPowerBi(): void {
     const User: LoginSapResponse = JSON.parse(localStorage.getItem('User'));
-    this.dashboardAdmservice.RequestReport(User.Token, this.reportId).subscribe((data) => {
+    const request: PowerBiRequest = new PowerBiRequest();
+    request.Token = User.Token;
+    request.Branch = User.Branch;
+    request.ReportId = this.reportId;
+    this.dashboardAdmservice.RequestReport(request).subscribe((data) => {
       const configentity: EmbedConfigEntity = data;
 
 

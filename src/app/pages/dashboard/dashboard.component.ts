@@ -10,6 +10,7 @@ import { EmbedConfigEntity, GrupoEntity, LoginSapResponse } from '../entity';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { isInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { map } from 'rxjs/operators';
+import { PowerBiRequest } from '../entity/PowerBiRequest';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,8 +30,8 @@ export class DashboardComponent implements OnInit {
   private ids: number[] = [0, 0, 0, 0, 0, 0, 0];
 
   constructor(private dashboardservice: DashboardService, private Notifi: NotifierService,
-    private spinner: NgxSpinnerService, private translate: LanguageTranslationModule,
-    private Activatedroute: ActivatedRoute, private router: Router) {
+              private spinner: NgxSpinnerService, private translate: LanguageTranslationModule,
+              private Activatedroute: ActivatedRoute, private router: Router) {
     this.Notificacao = new NotificacaoComponent(Notifi);
     this.loading = new SpinnerComponent(spinner);
     this.reportId = this.Activatedroute.snapshot.queryParamMap.get('id') || 0;
@@ -39,7 +40,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     // atualiza a rota dos documentos devido a ser a mesma página
     // tslint:disable-next-line: only-arrow-functions
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
     };
 
@@ -62,7 +63,12 @@ export class DashboardComponent implements OnInit {
 
   MostrarPowerBi(): void {
     const User: LoginSapResponse = JSON.parse(localStorage.getItem('User'));
-    this.dashboardservice.RequestReport(User.Token, this.reportId).subscribe((data) => {
+    const request: PowerBiRequest = new PowerBiRequest();
+    request.Token = User.Token;
+    request.Branch = User.Branch;
+    request.ReportId = this.reportId;
+    // const req: PowerBiRequest = new PowerBiRequest(this.reportId , User.Token, User.Branch) ;
+    this.dashboardservice.RequestReport(request).subscribe((data) => {
       const configentity: EmbedConfigEntity = data;
 
       if (configentity.Id === '2c90de5e-96a5-4089-bbc9-1defc9df2b01') {
@@ -227,7 +233,7 @@ export class DashboardComponent implements OnInit {
 
       };
 
-      console.log('config', config);
+      // console.log('config', config);
 
       const containerreport = this.reportContainer.nativeElement;
       const powerbi = new pbi.service.Service(pbi.factories.hpmFactory, pbi.factories.wpmpFactory, pbi.factories.routerFactory);
