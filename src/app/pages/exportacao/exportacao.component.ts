@@ -252,7 +252,9 @@ export class ExportacaoComponent implements OnInit {
           },
             (err: HttpErrorResponse) => {
               // this.loading.Fechar();
-              VerificarTpErro(this.router, err.error.ExceptionMessage, this.Notificacao, this.translate);
+              VerificarTpErro(this.router, err.error.Message, this.Notificacao, this.translate);
+              this.Notificacao.showNotification("error", err.error.ExceptionMessage);
+              
             });
         }
       });

@@ -16,6 +16,7 @@ export class ConfiguserService {
   }
 
   public SaveConfig(Token: string, User: UserEntity) {
+    
     let Url: string = "/back/api/user/" + Token + "/SaveConfig";
     return this.http.post(Url, User);
 

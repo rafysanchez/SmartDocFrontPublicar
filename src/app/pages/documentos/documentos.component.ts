@@ -372,6 +372,7 @@ export class DocumentosComponent implements OnInit, OnDestroy {
   }
 
   ChamarDados() {
+    debugger;
     const LayoutsUserFiltro: GridLayoutFilterEntity = new GridLayoutFilterEntity();
     LayoutsUserFiltro.UserId = this.User.UserLogged.Id;
     LayoutsUserFiltro.Branch = this.User.Branch;
@@ -399,6 +400,7 @@ export class DocumentosComponent implements OnInit, OnDestroy {
     // forkJoin([Documentos, Layouts, Cliente, LayoutsAll, Estado]).subscribe(results => {
     forkJoin([Layouts, Cliente, LayoutsAll, Estado]).subscribe(results => {
       // this.rowData = results[0];
+      debugger;
       this.ColunasGrid = results[0];
       this.LayoutsAll = results[2];
       this.Estados = results[3];

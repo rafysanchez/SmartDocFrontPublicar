@@ -75,7 +75,8 @@ export class ConfiguserComponent implements OnInit {
     if (!this.registerForm.valid) { return; }
     let Usuario: UserEntity = this.registerForm.value;
     Usuario.Id = this.User.UserLogged.Id;
-
+    Usuario.Branch = this.User.Branch ;
+    
     this.confirmationDialogService.confirm('TitlePopSalvar', 'MsgSalvar')
       .then((confirmed) => {
         if (confirmed) {
